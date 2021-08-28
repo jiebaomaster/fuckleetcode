@@ -49,6 +49,7 @@ public:
                 pq.push(tmpuser.listhead);
         }
         vector<int> res;
+        // 使用大顶堆，合并 n 个有序链表
         while(!pq.empty()) {
             auto it = pq.top(); // 大顶堆的头为最新的tweet
             res.push_back(it->id);
