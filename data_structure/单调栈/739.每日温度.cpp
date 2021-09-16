@@ -11,7 +11,7 @@ public:
                 // 每次出栈表示找到了一个元素的“下一个最大的”
                 res[tmp] = i - tmp;
             }
-            s.push(i); // 当前列表元素出栈
+            s.push(i); // 当前列表元素索引入栈
         }
 
         return res;
