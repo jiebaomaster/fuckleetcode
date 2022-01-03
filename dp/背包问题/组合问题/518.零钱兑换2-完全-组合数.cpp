@@ -20,8 +20,8 @@ class Solution {
     for (int i = 0; i <= coins.size(); i++) dp[i][0] = 1;
     for (int j = 1; j <= amount; j++) dp[0][j] = 0;
 
-    for (int i = 1; i <= coins.size(); i++) {
-      for (int j = 1; j <= amount; j++) {
+    for (int i = 1; i <= coins.size(); i++) { // 遍历物品
+      for (int j = 1; j <= amount; j++) { // 遍历背包容量
         if (j < coins[i - 1]) // 背包的剩余空间太小，当前物品不能装入
           dp[i][j] = dp[i - 1][j];
         else // 总的方法数为装入和不装入两种方法数之和
@@ -31,3 +31,4 @@ class Solution {
     return dp[coins.size()][amount];
   }
 };
+

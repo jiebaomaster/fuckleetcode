@@ -25,3 +25,32 @@ class Solution {
     return dp[amount] >= amount + 1 ? -1 : dp[amount];
   }
 };
+
+/**
+ * 背包问题，常规思路
+ * dp[i][j] 考虑不放入 nums[i] 和放入 nums[i] 两种情况，取最小值
+ * 需要注意 dp 初始值
+ */
+class Solution {
+ public:
+  int coinChange(vector<int>& coins, int amount) {
+    vector<vector<int>> dp(coins.size() + 1, vector<int>(amount + 1));
+
+    // dp[i][0] = 0，装满容量为 0 的背包不需要任何物品
+    for (int j = 1; j <= amount; j++) {
+      dp[0][j] = 10050; // 足够大的值，代表不能被选择
+    }
+    for (int i = 1; i <= coins.size(); i++) {
+      for (int j = 1; j <= amount; j++) {
+        if (coins[i - 1] > j)
+          dp[i][j] = dp[i - 1][j];
+        else {
+          dp[i][j] = min(dp[i - 1][j],                  // 不放入 nums[i]
+                         dp[i][j - coins[i - 1]] + 1);  // 放入 nums[i]
+        }
+      }
+    }
+
+    return dp[coins.size()][amount] > amount ? -1 : dp[coins.size()][amount];
+  }
+};
