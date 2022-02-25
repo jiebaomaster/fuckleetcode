@@ -1,8 +1,7 @@
 /**
  * https://leetcode-cn.com/problems/advantage-shuffle/
- * https://labuladong.gitbook.io/algo/mu-lu-ye-1/mu-lu-ye-4/tian-ji-sai-ma
+ * https://labuladong.github.io/algo/2/20/61/
  */
-
 class Solution {
  public:
   vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
@@ -18,11 +17,12 @@ class Solution {
         cmp);
     for (int i = 0; i < nums2.size(); i++) pq.push({i, nums2[i]});
 
-    // nums1的首位指针，分别指向最大值和最小值
+    // nums1的首尾指针，分别指向最大值和最小值
     int l = 0, r = nums1.size() - 1;
     while (!pq.empty()) {  // 遍历nums2中的所有元素，在nums1中寻找最佳匹配
       auto cur = pq.top();
       pq.pop();
+      // 比得过就比，比不过就送
       if (nums1[l] > cur.second) {
         // 当前nums1中最大的相比nums2中最大的有优势，匹配成功
         res[cur.first] = nums1[l++];
