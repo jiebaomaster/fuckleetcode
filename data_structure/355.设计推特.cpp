@@ -39,7 +39,7 @@ public:
     vector<int> getNewsFeed(int userId) {
         // 合并有序列表
         auto cmp = [](Tweet *l, Tweet *r) { return l->timestramp < r->timestramp; };
-        priority_queue<Tweet *, vector<Tweet *>, decltype(cmp) > pq(cmp); // 定义使用特殊比较函数的优先级队列
+        priority_queue<Tweet *, vector<Tweet *>, decltype(cmp) > pq(cmp); // 定义使用特殊比较函数的优先级队列
         User &user = userid_user[userId];
         user.id = userId;
         user.follows.insert(userId); // 关注自己
