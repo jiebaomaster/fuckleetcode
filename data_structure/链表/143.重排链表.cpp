@@ -42,7 +42,7 @@ class Solution {
  public:
   void reorderList(ListNode* head) {
     // 1. 快慢指针找链表中点
-    // slow 指向 向上取整(n/2) 的位置，奇为中偶偏上
+    // slow 指向 向上取整(n/2) 的位置，奇为中偶偏下
     ListNode* fast = head;
     ListNode* slow = head;
     while (fast && fast->next) {
@@ -52,6 +52,13 @@ class Solution {
 
     // 2. 反转后半部分链表
     ListNode* pre = nullptr;
+    /**
+     * 当链表长度为奇数时，slow 指向中点
+     *   翻转了整个下半部链表
+     * 当链表长度为偶数时，slow 指向下半部链表的第一个结点
+     *   cur 指向下半部链表的第二个结点，翻转链表时未翻转第一个结点，
+     *   因为第一个结点实际不需要移动，所以不翻转也是正确的
+     */
     ListNode* cur = slow->next;
     while (cur) {
       ListNode* next = cur->next;

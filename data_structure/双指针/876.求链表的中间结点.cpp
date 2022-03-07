@@ -15,10 +15,14 @@ class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
         ListNode* fast = head, *slow = head;
-        while(fast != nullptr && fast->next != nullptr) {
+        while(fast && fast->next) {
             slow = slow->next;
             fast = fast->next->next;
         }
+        /**
+         * 当链表长度为奇数时，slow 指向中点
+         * 当链表长度为偶数时，slow 指向下半个链表的第一个结点
+         */
         return slow;
     }
 };
