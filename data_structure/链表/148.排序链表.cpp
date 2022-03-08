@@ -154,12 +154,12 @@ class Solution2 {
       }
       n = n->next;
     }
+
     // 将p加入small链表中参与排序，避免特殊处理small链表为空的情况
     small->next = p;
-    large->next = nullptr;
-
     p->next = nullptr;  // small 链表尾元素的下一个必须为 null
     small = sortList(smallHead.next);  // start ~ p
+    large->next = nullptr;
     large = sortList(largeHead.next);  // p+1 ~ end
     p->next = large;                   // 连接排序后的 large 链表
 
