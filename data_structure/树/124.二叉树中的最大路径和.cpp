@@ -7,22 +7,24 @@ class Solution {
   int maxLen;
   int maxPathSum(TreeNode* root) {
     maxLen = INT_MIN;
-    doMaxPathSum(root);
+    dfs(root);
     return maxLen;
   }
 
   // 求包含root结点的最大路径和
-  int doMaxPathSum(TreeNode* root) {
-    if (!root) return -1;
-    int l = doMaxPathSum(root->left);
-    int r = doMaxPathSum(root->right);
+  int dfs(TreeNode* root) {
+    if (!root) return 0;
+    int l = dfs(root->left);
+    int r = dfs(root->right);
 
-    int len = root->val;
+    // 负数不应该在最大路径中
+    if(l < 0) l = 0;
+    if(r < 0) r = 0;
     // 如果要包含root，且能作为上层路径的一部分，则只能是：
     // 1. 单独root；2. 左子路径+root；3. root+右子路径
-    int tolen = max(len, max(len + l, len + r));
     // 最大路径可以不经过上层路径，即由 左子路径+root+右子路径 构成
-    maxLen = max(maxLen, max(tolen, len + r + l));
-    return tolen;
+    maxLen = max(maxLen, root->val + r + l);
+    // 返回的最大路径只能走左右中的一支
+    return max(l, r) + root->val;
   }
 };
