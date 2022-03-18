@@ -62,11 +62,12 @@ int BFS(Node start, Node target) {
 #### 二叉树中的路径
 
 路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。同一个节点在一条路径序列中至多出现一次。该路径至少包含一个节点，且不一定经过根节点。
-- 求路径上节点值相同的最大路径长度 [687.最长同值路径](./data_structure/树/687.最长同值路径.cpp)
-- 求路径上节点和的最大值 [124.二叉树中的最大路径和](./data_structure/树/124.二叉树中的最大路径和.cpp)
-- 求最长的路径长度 [543.二叉树的直径](./data_structure/树/543.二叉树的直径.cpp)
-- 判断是否存在路径上节点和等于 target 的从根开始的路径 [112.路径总和](./data_structure/树/112.路径总和.cpp)
-- 输出所有路径上节点和等于 target 的从根开始的路径 [113.路径总和II](./回溯/树形搜索/113.路径总和II.cpp)
+- 求路径上节点值相同的最大路径长度 [687.最长同值路径](./data_structure/树/树中的路径/687.最长同值路径.cpp)
+- 求路径上节点和的最大值 [124.二叉树中的最大路径和](./data_structure/树/树中的路径/124.二叉树中的最大路径和.cpp)
+- 求最长的路径长度 [543.二叉树的直径](./data_structure/树/树中的路径/543.二叉树的直径.cpp)
+- 判断是否存在路径上节点和等于 target 的从根开始的路径 [112.路径总和](./data_structure/树/树中的路径/112.路径总和.cpp)
+- 输出所有路径上节点和等于 target 的从根开始的路径 [113.路径总和II](./data_structure/树/树中的路径/113.路径总和II.cpp)
+- 输出二叉树上到结点 target 的路径长度为 k 的结点个数 [](./data_structure/树/树中的路径/863.二叉树中所有距离为K的结点.cpp)
 
 - 二维矩阵
 
@@ -317,6 +318,10 @@ function dfs(路径, i, nums) { // 考虑 nums[i] 的选择
 数字转字符串 `string to_string (int val);`
 字符串转数字 `int stoi(const std::string& str, std::size_t* pos = 0, int base = 10)`
            `int atoi(const char *str);`
+字符大小写转换 `int tolower( int ch );` `int toupper( int ch )`
+判断字符是否是字母 `int isalpha( int ch );`
+判断字符是否是数字 `int isdigit( int ch );`
+            
 
 ## TODO
 
