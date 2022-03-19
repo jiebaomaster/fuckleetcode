@@ -35,7 +35,7 @@ class Solution {
 /**
  * 方法二：归并排序
  */
-class Solution {
+class Solution1 {
  public:
   vector<int> sortArray(vector<int>& nums) {
     // 归并排序需要额外的辅助空间 O(n)
@@ -68,6 +68,49 @@ class Solution {
     while (s <= r) {
       nums[s] = back[s];
       s++;
+    }
+  }
+};
+
+/**
+ * 方法三：堆排序
+ */
+class Solution2 {
+ public:
+  vector<int> sortArray(vector<int>& nums) {
+    heapSort(nums);
+    return nums;
+  }
+
+  void heapSort(vector<int>& nums) {
+    int len = nums.size();
+    buildHeap(nums); // 先建立堆
+    for (int i = len - 1; i > 0; i--) {
+      swap(nums[0], nums[i]); // 交换堆顶和堆尾
+      adjustDown(nums, 0, i - 1); // 重新构建堆
+    }
+  }
+  // 建立堆，对于所有非叶子结点进行向下调整
+  void buildHeap(vector<int>& nums) {
+    int len = nums.size();
+    for (int i = (len - 1) / 2; i >= 0; i--) {
+      adjustDown(nums, i, len - 1);
+    }
+  }
+  // 大顶堆 向下调整，将 nums[s] 放到正确的位置
+  // s 的孩子为 左(s+1)*2-1，右(s+1)*2
+  void adjustDown(vector<int>& nums, int s, int e) {
+    while ((s + 1) * 2 - 1 <= e) { // 只调整非叶子结点
+      int child = (s + 1) * 2 - 1; // s 的左孩子
+      // 如果右孩子存在且右孩子更大，选择右孩子
+      if (child + 1 <= e && nums[child] < nums[child + 1]) 
+        child++;
+      if (nums[s] < nums[child]) { // 孩子结点更大，交换父结点和孩子结点
+        swap(nums[s], nums[child]);
+        s = child; // 接着调整孩子
+      } else { // 父结点时最大的，则调整结束
+        break;
+      }
     }
   }
 };
