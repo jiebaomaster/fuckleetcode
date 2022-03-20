@@ -1,7 +1,8 @@
 /**
  * https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/
  * https://labuladong.gitbook.io/algo/mu-lu-ye-2/mu-lu-ye-3/tan-xin-suan-fa-zhi-qu-jian-tiao-du-wen-ti#san-ying-yong-ju-li
- * 区间选点问题，覆盖所有区间最少需要几个点，即问有几个不重叠区间
+ * 区间选点问题，覆盖所有区间最少需要几个点，即问有几个不重叠区间，
+ * 有重叠的区间肯定能被不重叠区间的点覆盖
  */
 class Solution {
  public:

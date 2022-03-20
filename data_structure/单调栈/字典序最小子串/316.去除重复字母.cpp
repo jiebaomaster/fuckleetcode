@@ -4,8 +4,9 @@
  * https://leetcode-cn.com/problems/remove-duplicate-letters/solution/you-qian-ru-shen-dan-diao-zhan-si-lu-qu-chu-zhong-/
  * https://leetcode-cn.com/problems/remove-duplicate-letters/solution/yi-zhao-chi-bian-li-kou-si-dao-ti-ma-ma-zai-ye-b-4/
  * 
- * 高级字符串去重，求一个字典序最小的不重复子串，
- * 由单调栈保证字典序最小，附加出栈条件保证每个字符都只出现一次
+ * 高级字符串去重，求一个字典序最小的不重复子串，保证顺序可以联想到单调栈，
+ * 字典序最小即单调递增栈，栈顶元素只有在其字符后面还存在时才能出栈
+ * 附加出栈条件保证每个字符都只出现一次
  */
 class Solution {
  public:
@@ -36,7 +37,7 @@ class Solution {
 
     string res;
     while (!stack.empty()) {
-      res = string(1, stack.top()) + res; // 栈中的元素要逆序拼接
+      res = stack.top() + res; // 栈中的元素要逆序拼接
       stack.pop();
     }
     return res;

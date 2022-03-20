@@ -1,8 +1,10 @@
-
 /**
  * https://leetcode-cn.com/problems/non-overlapping-intervals/
  * https://labuladong.gitbook.io/algo/mu-lu-ye-2/mu-lu-ye-3/tan-xin-suan-fa-zhi-qu-jian-tiao-du-wen-ti
  * 区间选择问题
+ * 求需要移除区间的最小数量，使剩余区间互不重叠。
+ * 反过来考虑，选择不重叠的区间，剩下的就是需要移除的，
+ * 则问题转化为求最多不重叠区间数
  */ 
 class Solution {
  public:
