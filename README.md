@@ -321,7 +321,13 @@ function dfs(路径, i, nums) { // 考虑 nums[i] 的选择
 字符大小写转换 `int tolower( int ch );` `int toupper( int ch )`
 判断字符是否是字母 `int isalpha( int ch );`
 判断字符是否是数字 `int isdigit( int ch );`
-            
+``` c++
+// 小顶堆
+priority_queue<int, vector<int>, std::greater<int>> heap;
+// 自定义比较函数的堆
+auto cmp = [](T a, T b) { return a < b; };
+priority_queue<T, vector<T>, decltype(cmp) > pq(cmp);
+```
 
 ## TODO
 
