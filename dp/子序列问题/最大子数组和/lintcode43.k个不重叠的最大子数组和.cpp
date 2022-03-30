@@ -16,7 +16,7 @@
  *                  还是自己成为独立第 j 组（global[i-1][j-1]）
  * 则 local[i][j] = max(local[i-1][j], global[i-1][j-1]) + nums[i] 
  * 2.2 全局，第 i 个元素可以被选用 local[i][j]
- *              也可以不不选用 global[i-1][j]
+ *              也可以不选用 global[i-1][j]
  * 则 global[i][j] = max(global[i-1][j], local[i][j])
  */
 class Solution {
