@@ -1,6 +1,8 @@
 /**
  * https://leetcode-cn.com/problems/find-the-duplicate-number/
  * https://leetcode-cn.com/problems/find-the-duplicate-number/solution/xun-zhao-zhong-fu-shu-by-leetcode-solution/
+ * 一个包含 n + 1 个整数的数组 nums ，其数字都在 [1, n] 范围内（包括 1 和 n），
+ * 可知至少存在一个重复的整数，求这个重复的数
  * 
  * 寻找重复数最简单的就是进行哈希记录每个数出现的次数，空间复杂度为 O(n)
  * 方法一：原地哈希
