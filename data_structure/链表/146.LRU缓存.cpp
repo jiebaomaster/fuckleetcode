@@ -1,81 +1,75 @@
-class Node {
- public:
-  Node *next, *prev;
-  int key, val;
-
-  Node(int key, int val) {
-    this->key = key;
-    this->val = val;
-    this->next = nullptr;
-    this->prev = nullptr;
-  }
-};
-
-class DoubleList {
- public:
-  Node *head, *tail;
-  size_t size;
-  DoubleList() {
-    this->size = 0;
-    this->head = new Node(0, 0);
-    this->tail = new Node(0, 0);
-    this->tail->prev = this->head;
-    this->head->next = this->tail;
-  }
-
-  void removeNode(Node *node) {
-    node->prev->next = node->next;
-    node->next->prev = node->prev;
-    this->size--;
-  }
-  void push_back(Node *node) {
-    node->next = this->tail;
-    node->prev = this->tail->prev;
-    this->tail->prev->next = node;
-    this->tail->prev = node;
-
-    this->size++;
-  }
-};
-
 class LRUCache {
  public:
-  DoubleList *cache;
-  unordered_map<int, Node *> *hashmap;
-  int capacity;
+  struct Node {
+    Node* prev;
+    Node* next;
+    int val;
+    int key;
+    Node(int key, int val) : prev(nullptr), next(nullptr), key(key), val(val) {}
+  };
 
-  LRUCache(int capacity) {
-    this->cache = new DoubleList();
-    this->hashmap = new unordered_map<int, Node *>;
-    this->capacity = capacity;
-  }
+  class DoubleList {
+    int len;
+    Node* head;
+    Node* tail;
+
+   public:
+    DoubleList() : len(0) {
+      head = new Node(-1, -1);
+      tail = new Node(-1, -1);
+      head->next = tail;
+      tail->prev = head;
+    }
+    int size() { return len; }
+    void remove(Node* n) {
+      n->prev->next = n->next;
+      n->next->prev = n->prev;
+      len--;
+    }
+    Node* removeTail() {
+      auto n = tail->prev;
+      remove(n);
+      return n;
+    }
+    void insert(Node* n) {
+      n->next = head->next;
+      n->prev = head;
+      head->next->prev = n;
+      head->next = n;
+      len++;
+    }
+  };
+
+  int capacity;
+  DoubleList* cache; // 缓存链表
+  unordered_map<int, Node*> has; // 加速 key 查找
+  LRUCache(int capacity) : capacity(capacity), cache(new DoubleList()) {}
 
   int get(int key) {
-    auto it = this->hashmap->find(key);
-    if (it == this->hashmap->end()) return -1;
-    Node *node = it->second;
-    this->cache->removeNode(node);
-    this->cache->push_back(node);
-    return node->val;
+    auto n = has.find(key);
+    if (n == has.end()) return -1;
+
+    cache->remove(n->second);
+    cache->insert(n->second);
+
+    return n->second->val;
   }
 
-  void put(int key, int val) {
-    auto it = this->hashmap->find(key);
-    if (it == this->hashmap->end()) {
-      if (this->capacity == this->cache->size) {
-        Node *tmp = this->cache->head->next;
-        this->hashmap->erase(tmp->key);
-        this->cache->removeNode(tmp);
-        delete tmp;
+  void put(int key, int value) {
+    auto n = has.find(key);
+    if (n == has.end()) {
+      if (cache->size() == capacity) {
+        auto tail = cache->removeTail();
+        has.erase(tail->key);
+        delete tail;
       }
-      Node *tmp = new Node(key, val);
-      this->hashmap->insert(make_pair(key, tmp));
-      this->cache->push_back(tmp);
+      auto nn = new Node(key, value);
+      cache->insert(nn);
+      has[key] = nn;
     } else {
-      Node *node = it->second;
-      node->val = val;
-      this->cache->removeNode(node);
-      this->cache->push_back(node);
+      n->second->val = value;
+      cache->remove(n->second);
+      cache->insert(n->second);
     }
   }
 };

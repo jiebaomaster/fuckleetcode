@@ -1,12 +1,4 @@
 /**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
  * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/
  * https://labuladong.gitbook.io/algo/mu-lu-ye-3/mu-lu-ye-2/yuan-di-xiu-gai-shu-zu#you-xu-shu-zu-lian-biao-qu-zhong
  */
@@ -26,7 +18,26 @@ class Solution {
       }
       fast = fast->next;
     }
-    slow->next = nullptr; // 最后一个节点的后续节点为 null
+    slow->next = nullptr;  // 最后一个节点的后续节点为 null
+
+    return head;
+  }
+};
+
+class Solution1 {
+ public:
+  ListNode* deleteDuplicates(ListNode* head) {
+    auto l = head; // l 指向重复部分的第一个节点
+    auto r = head;
+    while (r) {
+      // 跳过所有重复的
+      while (r && l->val == r->val) {
+        r = r->next;
+      }
+      // 此时 r 指向下一个不重复的
+      l->next = r;
+      l = r;
+    }
 
     return head;
   }
