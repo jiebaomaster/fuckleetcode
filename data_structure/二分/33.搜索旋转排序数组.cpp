@@ -13,7 +13,7 @@
  *      [  m   k        ]  l=m+1
  *      [  m   k  |     ]  l=m+1
  *      [         | m k ]  l=m+1
- *      [  m      | k   ]  r=m-1
+ *      [  k      | m   ]  r=m-1
  * 通过和 nums[l]、nums[r] 的比较可判断某个元素在旋转的哪一边
  */
 class Solution {
