@@ -10,7 +10,7 @@ class Solution {
   string removeKdigits(string num, int k) {
     if (num.size() == 0 || num.size() == k) return "0";
     // 两个相同位数的数字大小关系取决于第一个不同的数的大小。第一个不同的数小的那个数字更小。
-    // 单调递增栈劲量保留最小的数字，注意保留的顺序是相反的
+    // 单调递增栈尽量保留最小的数字，注意保留的顺序是相反的
     stack<char> s;  
     int i = 0;
     while (i < num.size()) {
@@ -44,4 +44,36 @@ class Solution {
       return ss.size() == 0 ? "0" : ss;
     }
   }
+};
+
+/**
+ * 用 vector 代替 stack，加速字符串拼接
+ */
+class Solution {
+public:
+ string removeKdigits(string num, int k) {
+   vector<char> stk; // 用 vector 代替 stack，加速字符串拼接
+   // 单调栈保持字典序最小的数
+   for (int i = 0; i < num.size(); i++) {
+     while (!stk.empty() && k > 0 && num[i] < stk.back()) {
+       stk.pop_back();
+       k--;
+     }
+     stk.push_back(num[i]);
+   }
+
+   while (!stk.empty() && k--) {
+     stk.pop_back();
+   }
+   string res;
+   bool firstNotZero = false;
+   for (char c : stk) {
+     // 去除前导 0
+     if (!firstNotZero && c == '0') continue;
+     firstNotZero = true;
+     res += string(1, c);
+   }
+   if (!res.size()) return "0";
+   return res;
+ }
 };

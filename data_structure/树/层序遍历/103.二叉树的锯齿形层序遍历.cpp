@@ -11,23 +11,23 @@ class Solution {
     deque<TreeNode*> q;  // 双端队列
     vector<int> tracking;
     q.push_back(root);
-    bool r2l = true;  // 是否是从右往左遍历
+    bool r2l = false;  // 是否是从右往左遍历
     while (!q.empty()) {
       int size = q.size();
       for (int i = 0; i < size; i++) {
-        if (r2l % 2) {  // 右->左
+        if (r2l) {  // 右->左
+          auto n = q.back();
+          q.pop_back();
+          tracking.push_back(n->val);
+          // 头部入队，先右结点后左结点，保持双端队列中的结点顺序是从左往右的
+          if (n->right) q.push_front(n->right);   
+          if (n->left) q.push_front(n->left);
+        } else {  // 左->右
           auto n = q.front();
           q.pop_front();
           tracking.push_back(n->val);
           if (n->left) q.push_back(n->left);
           if (n->right) q.push_back(n->right);
-        } else {  // 左->右
-          auto n = q.back();
-          q.pop_back();
-          tracking.push_back(n->val);
-          // 头部入队，先右结点后左结点，保持双端队列中的结点顺序是从左往右的
-          if (n->right) q.push_front(n->right);
-          if (n->left) q.push_front(n->left);
         }
       }
       ret.push_back(tracking);
