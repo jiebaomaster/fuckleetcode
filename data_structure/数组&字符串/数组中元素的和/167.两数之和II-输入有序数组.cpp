@@ -13,7 +13,7 @@ class Solution {
         return {left + 1, right + 1};
       } else if (tmp > target) {  // 太大了，要减小
         right--;
-      } else {  // 太小了，要减小
+      } else {  // 太小了，要增大
         left++;
       }
     }

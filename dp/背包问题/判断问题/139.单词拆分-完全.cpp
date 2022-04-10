@@ -34,3 +34,35 @@ class Solution {
     return dp[s.size()];
   }
 };
+
+/**
+ * 方法二：根据选择的单词进行回溯
+ */
+class Solution1 {
+ public:
+  bool wordBreak(string s, vector<string>& wordDict) {
+    return backTrace(s, 0, wordDict);
+  }
+  /**
+   * @param index s[index...] 之后还未匹配
+   */
+  bool backTrace(string& s, int index, vector<string>& wordDict) {
+    if (s.size() == index) { // 匹配到末尾说明匹配成功了
+      return true;
+    }
+    // 给当前位置遍历所有可选的匹配项
+    for (int i = 0; i < wordDict.size(); i++) {
+      if (valid(s, index, wordDict[i])) { // 可匹配的话进入下个位置的匹配
+        if (backTrace(s, index + wordDict[i].size(), wordDict)) return true;
+      }
+    }
+    return false;
+  }
+  // 判断 c 是否可与 s[index...] 匹配
+  bool valid(string& s, int index, string& c) {
+    for (int j = 0; j < c.size(); j++) {
+      if (index >= s.size() || s[index++] != c[j]) return false;
+    }
+    return true;
+  }
+};
