@@ -114,13 +114,8 @@ class Node {
   int key;
   int val;
   int freq;
-  Node* prev;
-  Node* next;
 
-  Node(int key, int val, int freq) : key(key), val(val), freq(freq) {
-    prev = nullptr;
-    next = nullptr;
-  }
+  Node(int key, int val, int freq) : key(key), val(val), freq(freq) {}
 };
 
 class LFUCache {
@@ -130,16 +125,17 @@ class LFUCache {
   unordered_map<int, list<Node>> freq_list;
   int min_freq;
   void update_freq(list<Node>::iterator n) {
-    int key = (*n).key;
-    int val = (*n).val;
-    int freq = (*n).freq;
+    int key = n->key;
+    int val = n->val;
+    int freq = n->freq;
     freq_list[freq].erase(n);
     // 头插尾删
     freq_list[freq + 1].push_front(Node(key, val, freq + 1));
+    // 更新迭代器
+    key_node[key] = freq_list[freq + 1].begin(); 
     // 移动node 有可能造成最低频率改变
-    if (freq == min_freq && freq_list[min_freq].size() == 0) 
+    if (freq == min_freq && freq_list[min_freq].empty()) 
       min_freq++;
-    key_node[key] = freq_list[freq + 1].begin(); // 更新迭代器
   }
 
  public:
@@ -156,8 +152,8 @@ class LFUCache {
     if (capacity == 0) return;
     auto n = key_node.find(key);
     if (n != key_node.end()) {
-      update_freq(n->second);
       n->second->val = value;
+      update_freq(n->second);
       return;
     }
 

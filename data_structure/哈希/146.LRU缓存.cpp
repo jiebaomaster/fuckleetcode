@@ -1,3 +1,10 @@
+/**
+ * https://leetcode-cn.com/problems/lru-cache/
+ * hash表快速查找缓存
+ * 双向链表实现lru的缓存，头插尾出法，操作节点后更新节点在链表中的位置
+ * 
+ * 方法一：手写双向链表
+ */
 class LRUCache {
  public:
   struct Node {
@@ -10,6 +17,7 @@ class LRUCache {
 
   class DoubleList {
     int len;
+    // 头尾辅助节点，在插入和删除时就不用考虑边界条件了
     Node* head;
     Node* tail;
 
@@ -31,7 +39,7 @@ class LRUCache {
       remove(n);
       return n;
     }
-    void insert(Node* n) {
+    void insert(Node* n) { // 头插
       n->next = head->next;
       n->prev = head;
       head->next->prev = n;
@@ -75,8 +83,56 @@ class LRUCache {
 };
 
 /**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache* obj = new LRUCache(capacity);
- * int param_1 = obj->get(key);
- * obj->put(key,value);
+ * 方法二：STL list
  */
+class LRUCache {
+  class Node {
+   public:
+    int key;
+    int val;
+    Node(int key, int val) : key(key), val(val) {}
+  };
+
+  int capacity;
+
+  list<Node> cache;
+  unordered_map<int, list<Node>::iterator> key_node;
+
+  // 更新链表节点
+  void update(list<Node>::iterator node) {
+    int key = node->key;
+    int val = node->val;
+    cache.erase(node);
+    cache.push_front(Node(key, val));
+    key_node[key] = cache.begin();
+  }
+
+ public:
+  LRUCache(int capacity) : capacity(capacity) {}
+
+  int get(int key) {
+    auto it = key_node.find(key);
+    if (it == key_node.end()) return -1;
+
+    update(it->second);
+    return it->second->val;
+  }
+
+  void put(int key, int value) {
+    auto it = key_node.find(key);
+    if (it != key_node.end()) {
+      it->second->val = value;
+      update(it->second);
+      return;
+    }
+
+    if (cache.size() == capacity) {
+      auto removeNode = cache.back();
+      key_node.erase(removeNode.key);
+      cache.pop_back();
+    }
+
+    cache.push_front(Node(key, value));
+    key_node[key] = cache.begin();
+  }
+};
