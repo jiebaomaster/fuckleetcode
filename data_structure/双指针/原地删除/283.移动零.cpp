@@ -6,19 +6,19 @@
 class Solution {
  public:
   void moveZeroes(vector<int>& nums) {
-    if (nums.size() < 2) return;
-
-    // 原地删除数组中所有的 0
-    int slow = -1, fast = 0;
-    while (fast < nums.size()) { 
-      if (nums[fast] != 0) {
-        nums[++slow] = nums[fast];
-      }
-      fast++;
-    }
+    int l = 0,  // 可放置元素的位置
+        r = 0;  // 当前元素
     
-    // 将后面 (slow, nums.size()) 的元素全部赋值为 0
-    for (slow++; slow < nums.size(); slow++) nums[slow] = 0;
+    // 原地删除数组中所有的 0
+    while (r < nums.size()) {
+      if (nums[r] != 0) // 将不为 0 的元素放置到前面
+        nums[l++] = nums[r];
+
+      r++;
+    }
+
+    // 将后面 [l, nums.size()) 的元素全部赋值为 0
+    while (l < nums.size()) nums[l++] = 0;
   }
 };
 
