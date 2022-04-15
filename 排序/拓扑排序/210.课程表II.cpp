@@ -56,9 +56,9 @@ class Solution1 {
     vector<int> res;
     vector<int> inEdge(numCourses);             // 每个节点的入度
     vector<vector<int>> linkTable(numCourses);  // 临接表
-    for (int i = 0; i < prerequisites.size(); i++) {
-      linkTable[prerequisites[i][1]].push_back(prerequisites[i][0]);
-      inEdge[prerequisites[i][0]]++;
+    for (const auto& next_pre : prerequisites) {
+      inEdge[next_pre[0]]++;
+      linkTable[next_pre[1]].push_back(next_pre[0]);
     }
 
     queue<int> q; // bfs 队列
