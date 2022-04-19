@@ -44,7 +44,7 @@ class Solution {
     for (int i = 0; i < nums.size();) {
       if (nums[i] > 0 && nums[i] <= nums.size() // 在[1,size] 内
         && nums[i] != nums[nums[i] - 1]) // 原地 hash 还没完成
-        // 通过交换使得下标为 nums[i] - 1] 的位置完成了原地hash
+        // 通过交换使得下标为 nums[i]-1 的位置完成了原地hash
         swap(nums[i], nums[nums[i] - 1]);
       else
         i++;

@@ -65,13 +65,13 @@ class Solution1 {
  * 也可以从后往前遍历，然后将 163 向后冒泡
  */
 class Solution {
-public:
-    void moveZeroes(vector<int>& nums) {
+ public:
+  void moveZeroes(vector<int>& nums) {
     int left = 0;
     int right = 0;
-    while (right < nums.size()) { // 从左往右遍历
+    while (right < nums.size()) {  // 从左往右遍历
       if (nums[right] != 1 && nums[right] != 6 && nums[right] != 3) {
-        for (int i = right; i > left; i--) { // 将非 163 往前冒泡
+        for (int i = right; i > left; i--) {  // 将非 163 往前冒泡
           swap(nums[i], nums[i - 1]);
         }
         left++;
