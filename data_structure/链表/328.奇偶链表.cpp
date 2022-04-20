@@ -5,7 +5,6 @@
 class Solution {
  public:
   ListNode* oddEvenList(ListNode* head) {
-    if (!head || !head->next) return head;
     ListNode odd(-1); // 奇数链表
     ListNode even(-1); // 偶数链表
     auto preOdd = &odd; // 奇数链表的尾节点
@@ -13,21 +12,19 @@ class Solution {
     auto cur = head;
     bool isOdd = true;
     while (cur) {
-      auto next = cur->next;
       if (isOdd) {
         preOdd->next = cur;
         preOdd = cur;
-        preOdd->next = nullptr;
       } else {
         preEven->next = cur;
         preEven = cur;
-        preEven->next = nullptr;
       }
-      cur = next;
+      cur = cur->next;
       isOdd = !isOdd;
     }
     // 连接技术链表的尾节点和偶数链表的头节点
     preOdd->next = even.next;
+    preEven->next = nullptr;
     return odd.next;
   }
 };
