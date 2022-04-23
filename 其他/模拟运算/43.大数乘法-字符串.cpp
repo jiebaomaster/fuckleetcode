@@ -19,7 +19,7 @@ class Solution {
         x = num1[j] - '0';
          // 边算边叠加，临时计算结果需要加上本位上已经计算出来的数
         tmp = x * y + join + reverse_res[j + i];
-        reverse_res[j + i] += tmp % 10; // 计算本位
+        reverse_res[j + i] = tmp % 10; // 计算本位
         join = tmp / 10; // 计算进位
       }
       if (join) { // 最高位的进位单独处理
