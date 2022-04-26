@@ -40,3 +40,35 @@ class Solution1 {
     return res;
   }
 };
+
+/**
+ * 方法三：莫里斯遍历
+ * 和中序莫里斯遍历的代码类似，只是输出根节点的地方变了 
+ */
+class Solution2 {
+ public:
+  vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> res;
+    auto cur = root;
+    while (cur) {
+      if (!cur->left) { // 没有左子树
+        res.push_back(cur->val); // 没有左子树的直接输出根节点
+        cur = cur->right; // 遍历右子树
+      } else { // 否则遍历左子树
+        auto pre = cur->left;
+        // 找到左子树的最右边节点 rightInleft，即搜索前驱节点
+        while (pre->right && pre->right != cur) pre = pre->right;
+
+        if (!pre->right) { // 建立 rightInleft 和 cur 的关系
+          res.push_back(cur->val); // 前序遍历在将根节点向左子树移动前输出
+          pre->right = cur;
+          cur = cur->left;
+        } else { // 已经建立过关系了，说明左子树都遍历完成了
+          cur = cur->right; // 遍历右子树
+          pre->right = nullptr; // 删除临时连接
+        }
+      }
+    }
+    return res;
+  }
+};
