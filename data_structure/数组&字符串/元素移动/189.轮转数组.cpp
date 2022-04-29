@@ -42,13 +42,13 @@ class Solution {
  * 方法三：类似于左旋转字符串，先局部翻转再整体翻转
  */
 class Solution2 {
-public:
-    void rotate(vector<int>& nums, int k) {
-        int n = nums.size();
-        k %= n;
-        if(!k) return;
-        reverse(nums.begin(), nums.end()-k);
-        reverse(nums.end()-k, nums.end());
-        reverse(nums.begin(), nums.end());
-    }
+ public:
+  void rotate(vector<int>& nums, int k) {
+    int n = nums.size();
+    k %= n;
+    if (!k) return;
+    reverse(nums.begin(), nums.end() - k);
+    reverse(nums.end() - k, nums.end());
+    reverse(nums.begin(), nums.end());
+  }
 };
