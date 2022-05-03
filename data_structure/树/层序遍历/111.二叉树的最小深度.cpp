@@ -9,23 +9,21 @@ class Solution {
     // 二叉树不会走回头路，不用 visited
     queue<TreeNode*> q;
     q.push(root);
-    int step = 1;
+    int depth = 0;
     while (!q.empty()) {
-      int sz = q.size();
-      for (int i = 0; i < sz; i++) {
-        TreeNode* cur = q.front();
+      depth++;
+      for (int i = q.size(); i > 0; i--) {
+        auto n = q.front();
         q.pop();
-        // 找到第一个叶子节点
-        if (!cur->right && !cur->left) {
-          return step;
+        if (!n->left && !n->right) {
+          return depth;
         }
-        if (cur->left) {
-          q.push(cur->left);
+        if (n->left) {
+          q.push(n->left);
         }
-        if (cur->right) {
-          q.push(cur->right);
+        if (n->right) {
+          q.push(n->right);
         }
-        step++;
       }
     }
     return 0;
