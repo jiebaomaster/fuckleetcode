@@ -12,7 +12,7 @@ class Solution {
   bool doChange(TreeNode* left, TreeNode* right) {
     // 空的结点是对称的
     if (!left && !right) return true;
-    // 非空和空不对称，结点值不想等不对称
+    // 非空和空不对称，结点值不相等不对称
     if (!left || !right || left->val != right->val) return false;
     // 递归判断当前结点的子节点是否对称，一组2个结点有4个子节点，即两组需要判断
     return doChange(left->left, right->right) && doChange(left->right, right->left);
