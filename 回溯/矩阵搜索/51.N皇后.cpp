@@ -5,10 +5,9 @@
 class Solution {
  public:
   vector<vector<string>> res;  // 结果集
-  vector<string> tracking;     // 路径
 
   vector<vector<string>> solveNQueens(int n) {
-    vector<string> tracking(n, string(n, '.'));
+    vector<string> tracking(n, string(n, '.')); // 路径
     back_tracking(0, n, tracking);
     return res;
   };

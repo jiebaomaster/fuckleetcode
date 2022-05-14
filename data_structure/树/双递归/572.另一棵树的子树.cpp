@@ -1,5 +1,6 @@
 /**
  * https://leetcode-cn.com/problems/subtree-of-another-tree/
+ * 判断一棵树是否是另一棵树的子树
  * 先序遍历二叉树，判断从每一个结点开始的二叉树是否和 subRoot 相等
  */
 class Solution {

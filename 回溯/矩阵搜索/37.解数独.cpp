@@ -50,3 +50,70 @@ class Solution {
     return true;
   }
 };
+
+/**
+ * 方法二：位置哈希
+ * 参考 36 题，利用哈希表判断数字是否合法，合法的才能进一步回溯
+ */
+class Solution {
+ public:
+  void solveSudoku(vector<vector<char>> &board) {
+    vector<vector<bool>> row(9, vector<bool>(9));
+    vector<vector<bool>> col(9, vector<bool>(9));
+    vector<vector<bool>> block(9, vector<bool>(9));
+
+    // 已经确定的位置先记录
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] == '.') continue;
+        int k = board[i][j] - '1';
+        int b = i / 3 * 3 + j / 3;
+        row[i][k] = true;
+        col[j][k] = true;
+        block[b][k] = true;
+      }
+    }
+
+    backtrack(board, 0, 0, row, col, block);
+  }
+  bool backtrack(vector<vector<char>> &board, int i, int j,
+                 vector<vector<bool>> &row, vector<vector<bool>> &col,
+                 vector<vector<bool>> &block) {
+    if (i >= 9) {
+      return true;
+    }
+
+    // 下一个位置
+    int nexti = i;
+    int nextj = j + 1;
+    if (nextj >= 9) {
+      nexti++;
+      nextj = 0;
+    }
+
+    // 固定的位置，直接跳到下一个位置
+    if (board[i][j] != '.') {
+      return backtrack(board, nexti, nextj, row, col, block);
+    }
+
+    int b = i / 3 * 3 + j / 3;
+    for (int k = 0; k < 9; k++) {
+      // 跳过不合法的值
+      if (row[i][k] || col[j][k] || block[b][k]) continue;
+
+      row[i][k] = true;
+      col[j][k] = true;
+      block[b][k] = true;
+      board[i][j] = k + '1';
+
+      if (backtrack(board, nexti, nextj, row, col, block)) return true;
+      // 回溯
+      row[i][k] = false;
+      col[j][k] = false;
+      block[b][k] = false;
+      board[i][j] = '.';
+    }
+
+    return false;
+  }
+};
