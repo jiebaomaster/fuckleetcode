@@ -1,6 +1,6 @@
 /**
  * https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/
- * 
+ * 负数标记法
  * 在输入数组中用数字的正负来表示该位置所对应数字是否存在。
  * 遍历输入数组，给对应位置的数字取相反数。
  * 遍历修改后的数组，非负数的位置表示该位置未出现过

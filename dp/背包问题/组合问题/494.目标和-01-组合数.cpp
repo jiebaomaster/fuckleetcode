@@ -7,6 +7,8 @@
  * 由（1）+（2）有 left = (target + sum)/2
  * 问题被转化为 从 nums 中选取数，求和为 left 的组合的个数
  * 即求恰好装满为 left 的背包，有几种方法
+ * 
+ * 本题中，物品的值可能为 0，故在遍历背包大小时要从 0 开始遍历
  */
 class Solution {
  public:
@@ -33,5 +35,27 @@ class Solution {
     }
 
     return dp[nums.size()][left];
+  }
+};
+
+/**
+ * 方法二：回溯
+ */
+class Solution {
+ public:
+  int res;
+  int findTargetSumWays(vector<int>& nums, int target) {
+    dfs(nums, target, 0, 0);
+    return res;
+  }
+  void dfs(vector<int>& nums, int target, int index, int cur) {
+    if (index == nums.size()) {
+      if (target == cur) res++; // 找到一个符合与要求的解
+      return;
+    }
+    // 本位置选 +
+    dfs(nums, target, index + 1, cur + nums[index]);
+    // 本位置选 -
+    dfs(nums, target, index + 1, cur - nums[index]);
   }
 };

@@ -3,7 +3,7 @@
  * https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/solution/xun-zhao-xuan-zhuan-pai-xu-shu-zu-zhong-5irwp/
  * 数组的最小值即为旋转数组的旋转点
  * 二分法的本质是分段性，而不是有序性。
- * 旋转点将原数组分成两个有序数组，只要知道 mid 在前后哪一段上，就能边界的移动方向
+ * 旋转点将原数组分成两个有序数组，只要知道 mid 在前后哪一段上，就能确定边界的移动方向
  * 
  * 方法一：右边界 nums[r] 确定的分段
  * 由 nums[mid] 与 nums[r] 的大小关系可以确定 mid 在哪一段
