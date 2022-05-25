@@ -62,3 +62,22 @@ class Solution {
     }
   }
 };
+
+/**
+ * 方法三：记录后继节点
+ */
+class Solution {
+ public:
+  TreeNode* next; // 记录上一个遍历的节点
+  void flatten(TreeNode* root) {
+    if (!root) return;
+    // 右->左->根，这样 next 总是指向后继节点
+    flatten(root->right);
+    flatten(root->left);
+
+    root->right = next;
+    root->left = nullptr;
+    next = root;
+    return;
+  }
+};
