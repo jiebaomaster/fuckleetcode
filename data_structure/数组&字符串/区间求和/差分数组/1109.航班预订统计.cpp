@@ -1,6 +1,6 @@
 /**
  * https://leetcode-cn.com/problems/corporate-flight-bookings/
- * https://labuladong.gitbook.io/algo/mu-lu-ye-3/mu-lu-ye-3/cha-fen-ji-qiao
+ * https://labuladong.gitee.io/algo/2/18/23/
  * 差分数组的主要适用场景是频繁对原始数组的某个区间的元素进行增减。
  * 定义差分数组 diff[i] = num[i] - num[i-1]
  * 则 num[i...j] + k = { diff[i] + k
