@@ -42,6 +42,20 @@
 [这可能是全b站最通俗易懂的线段树入门教学视频了](https://www.bilibili.com/video/BV1qY411n7Qs)
 
 ``` cpp
+/* 前缀和 */
+for(int i = 1; i <= nums.size(); i++)
+  prefix[i] = prefix[i-1] + nums[i-1];
+
+/* 差分数组 */
+// 构建
+diff[0] = nums[0];
+for(int i = 1; i < nums.size(); i++)
+  diff[i] = nums[i] - nums[i-1];
+// 还原
+res[0] = diff[0];
+for(int i = 1; i < nums.size(); i++) 
+  res[i] = res[i-1] + diff[i];
+
 class BinaryIndexTree { // 树状数组
     vector<int>& nums;
     vector<int> c; // c 维护一些区间的和，c[i] = (n[i]-lowbit(i), n[i]]
