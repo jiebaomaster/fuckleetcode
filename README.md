@@ -37,6 +37,7 @@
 
 「线段树」能解决所有问题，但是其代码很长，而且常数很大，实际表现不算很好。所以只有在不得不用的时候才考虑「线段树」。
 
+[【线段树 / 树状数组入门级运用】Python实现](https://leetcode.cn/circle/discuss/6Xl95r/)
 [算法学习笔记(2) : 树状数组](https://zhuanlan.zhihu.com/p/93795692)
 [算法学习笔记(14): 线段树](https://zhuanlan.zhihu.com/p/106118909)
 [这可能是全b站最通俗易懂的线段树入门教学视频了](https://www.bilibili.com/video/BV1qY411n7Qs)
