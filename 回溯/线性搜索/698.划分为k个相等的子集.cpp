@@ -1,6 +1,7 @@
 /**
  * https://leetcode-cn.com/problems/partition-to-k-equal-sum-subsets/
  * https://labuladong.gitee.io/algo/4/29/105/
+ * https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/solution/by-lfool-d9o7/
  * 
  * 要将 n 个数字平均放入 k 个桶中，
  * 如果只有 2 个桶，可以等效为容量为 sum/2 的背包问题，即 416 题
@@ -38,6 +39,9 @@ class Solution {
     for (int i = 0; i < bucket.size(); i++) {
       // 剪枝。如果当前数字装入第i个桶会使桶中数字过大，则跳过
       if (bucket[i] + nums[index] > target) continue;
+      // 剪枝。如果当前桶和上一个桶内的元素和相等，则跳过
+      // 如果元素和相等，那么 nums[index] 选择上一个桶和选择当前桶可以得到的结果是一致的
+      if(i > 0 && bucket[i] == bucket[i-1]) continue;
 
       bucket[i] += nums[index]; // 将 nums[index] 装入 bucket[i]
       // 递归穷举下一个数字的选择，注意我们只要判断能不能，而不是记录所有可能性，所有一旦可以就返回
