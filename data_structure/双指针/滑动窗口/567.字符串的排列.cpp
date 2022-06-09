@@ -36,3 +36,47 @@ class Solution {
     return false;
   }
 };
+
+/**
+ * 方法二：非固定大小的窗口滑动
+ */
+class Solution {
+ public:
+  bool checkInclusion(string s1, string s2) {
+    unordered_map<char, int> times;
+    for (char c : s1) {
+      times[c]++;
+    }
+
+    int l = 0, r = 0;
+    unordered_map<char, int> cur = times;
+    int cnt = times.size(); // 还剩几个字符没有满足需求
+    while (r < s2.size()) {
+      if (cur.find(s2[r]) == cur.end()) {
+        // 碰到非需求字符，重新开始
+        r++;
+        l = r;
+        cur = times;
+        cnt = times.size();
+      } else {
+        // s2[r] 是需求字符
+        // 向右滑动一个
+        cur[s2[r]]--;
+        // 有一个字符满足要求了
+        if (cur[s2[r]] == 0) {
+          cnt--; // 更新
+          if (cnt == 0) return true;
+        }
+        // s2[r] 出现的次数太多了，需要收缩左边界
+        while (cur[s2[r]] == -1) {
+          cur[s2[l]]++;
+          // 收缩左边界导致有字符不满足需求
+          if (cur[s2[l]] == 1) cnt++;
+          l++;
+        }
+        r++;
+      }
+    }
+    return false;
+  }
+};

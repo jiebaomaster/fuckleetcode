@@ -55,3 +55,24 @@ class Solution1 {
     return ret;
   }
 };
+
+class Solution {
+ public:
+  string addStrings(string num1, string num2) {
+    string res;
+    int i = num1.size() - 1;
+    int j = num2.size() - 1;
+    int carry = 0;
+    while (i >= 0 || j >= 0 || carry) {
+      int tmp = carry;
+      if (i >= 0) tmp += num1[i--] - '0';
+      if (j >= 0) tmp += num2[j--] - '0';
+
+      carry = tmp / 10;
+      res.push_back((tmp % 10) + '0');
+    }
+    reverse(res.begin(), res.end());
+
+    return res;
+  }
+};
