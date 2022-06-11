@@ -3,7 +3,9 @@
  * https://labuladong.gitbook.io/algo/mu-lu-ye-2/mu-lu-ye-1/xin-feng-qian-tao-wen-ti
  * 先对宽度 w 进行升序排序，如果遇到 w 相同的情况，则按照高度 h 降序排序。
  * 之后把所有的 h 作为一个数组，在这个数组上计算最长递增子序列的长度就是答案。
- * 1. 排序后序列中宽度是生序的，保证了依次取得的宽度总是满足要求的；
+ * 排序后等于把在二维(长、宽)上的最长递增子序列问题转换成一维(宽)上的最长递增
+ * 子序列的查找, 因为长度已经满足递增, 只需要在宽度上也递增即可
+ * 1. 排序后序列中宽度是升序的，保证了依次取得的宽度总是满足要求的；
  * 2. 求高度的递增子序列，又保证了高度是满足要求的；
  * 3. 宽度相同时高度是降序的，要保证子序列高度的升序，相同宽度下只能被取到一个，则不会出现宽度的冲突
  */
@@ -30,6 +32,37 @@ class Solution {
       res = max(res, dp[i]);
     }
 
+    return res;
+  }
+};
+
+/**
+ * 方法二：用二分法优化求最长递增子序列部分
+ */
+class Solution {
+ public:
+  int maxEnvelopes(vector<vector<int>>& envelopes) {
+    sort(envelopes.begin(), envelopes.end(), [](auto& lhs, auto& rhs) {
+      if (lhs[0] == rhs[0])
+        return lhs[1] > rhs[1];
+      else
+        return lhs[0] < rhs[0];
+    });
+
+    vector<int> tail(envelopes.size());
+    int res = 0;
+    for (auto& n : envelopes) {
+      int l = 0, r = res;
+      while (l < r) {
+        int mid = l + (r - l) / 2;
+        if (tail[mid] < n[1])
+          l = mid + 1;
+        else
+          r = mid;
+      }
+      tail[l] = n[1];
+      if (l == res) res++;
+    }
     return res;
   }
 };
