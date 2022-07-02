@@ -52,30 +52,34 @@ class Solution {
 /**
  * 可以在通过控制 dfs 的过程使括号序列都是合法的，就不用最后去判断合法性了
  */
-class Solution1 {
+class Solution {
  public:
   vector<string> res;
   vector<string> generateParenthesis(int n) {
     string track;
-    dfs(track, 0, n * 2, 0, 0);
+    backtrace(track, n, 0, 0);
     return res;
   }
-
-  // i 记录"("的数量，j 记录")"的数量
-  void dfs(string &track, int index, int n, int i, int j) {
-    if (index == n) { // 括号序列总是合法的
+  /**
+   * @param n 目标括号对数
+   * @param l 左括号个数
+   * @param r 右括号个数
+   */
+  void backtrace(string &track, int n, int l, int r) {
+    if (n == l && n == r) {
       res.push_back(track);
       return;
     }
-    if (i < n / 2) { // 最多有 n/2 个"("
-      track.push_back('(');
-      dfs(track, index + 1, n, i + 1, j);
+
+    if (r < n && l > r) { // 右括号个数不能超过左括号
+      track.push_back(')');
+      backtrace(track, n, l, r + 1);
       track.pop_back();
     }
 
-    if (i > j) { // 先有"("才能有")"
-      track.push_back(')');
-      dfs(track, index + 1, n, i, j + 1);
+    if (l < n) { // 左括号个数最多只能是 n
+      track.push_back('(');
+      backtrace(track, n, l + 1, r);
       track.pop_back();
     }
   }
