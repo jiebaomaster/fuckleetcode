@@ -8,6 +8,7 @@ class Solution {
  public:
   int findMinArrowShots(vector<vector<int>> &points) {
     // 将区间按右边界升序排序
+    // 按照右边界排序，就要从左向右遍历，因为右边界越小越好，只要右边界越小，留给下一个区间的空间就越大
     sort(points.begin(), points.end(),
          [](vector<int> &a, vector<int> &b) { return a[1] < b[1]; });
 
