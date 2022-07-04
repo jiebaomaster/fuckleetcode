@@ -36,8 +36,8 @@ class Solution {
  * 方法二：静态链表，即将数组元素值作为指针构成的链表
  * https://leetcode-cn.com/problems/find-the-duplicate-number/solution/287xun-zhao-zhong-fu-shu-by-kirsche/
  * 例如：[1,3,4,2,2] 构成以下链表
- *       1->3->2->4->2
- *                ^__|
+ *       1->3->2->4
+ *             ^__|
  * 可以发现有两个结点指向链表中环的入口结点，则问题转化为找链表中的环
  */
 class Solution1 {

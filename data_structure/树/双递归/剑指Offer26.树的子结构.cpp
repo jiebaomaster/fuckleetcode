@@ -10,7 +10,7 @@ class Solution {
 
     return isSub(A, B) // 判断自身
     || isSubStructure(A->left, B) // 判断左子树
-    ||isSubStructure(A->right, B); // 判断右子树
+    || isSubStructure(A->right, B); // 判断右子树
   }
   // 判断 b 是否是 a 的子结构
   bool isSub(TreeNode* a, TreeNode* b) {
