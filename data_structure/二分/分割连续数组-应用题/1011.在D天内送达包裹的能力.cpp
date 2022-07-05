@@ -6,20 +6,16 @@ class Solution {
  public:
   // 计算 船的运载能力为 capacity 时，需要多少天运完
   int f(vector<int>& weights, int capacity) {
-    int days = 0, curr = 0;
-    for (const auto w : weights) {
-      if (curr + w < capacity) {
-        curr += w;
-      } else if (curr + w == capacity) {
-        curr = 0;
-        days++;
-      } else {
-        curr = w;
-        days++;
+    int cnt = 1;
+    int cur = 0;
+    for (int i = 0; i < weights.size(); i++) {
+      cur += weights[i];
+      if (cur > capacity) {
+        cur = weights[i];
+        cnt++;
       }
     }
-    if (curr != 0) days++;
-    return days;
+    return cnt;
   }
 
   int shipWithinDays(vector<int>& weights, int days) {
