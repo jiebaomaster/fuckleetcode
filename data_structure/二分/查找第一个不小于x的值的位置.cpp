@@ -11,7 +11,7 @@ int lower_bound(vector<int> &nums, int l, int r, int x) {
     if(nums[mid] < x) l = mid + 1;
     else r = mid;
   }
-  return l; // 最终 l 和 r 想等，返回谁都可以
+  return l; // 最终 l 和 r 相等，返回谁都可以
 }
 
 /**
