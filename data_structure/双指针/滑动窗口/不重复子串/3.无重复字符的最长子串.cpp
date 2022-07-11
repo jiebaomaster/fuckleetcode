@@ -1,7 +1,9 @@
 /**
  * https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
  * https://labuladong.gitbook.io/algo/mu-lu-ye-1/mu-lu-ye-4/hua-dong-chuang-kou-ji-qiao-jin-jie#si-zui-chang-wu-zhong-fu-zi-chuan
- *
+ * 
+ * 方法一：滑动窗口
+ * 右直走，左按条件滑动，实际上会遍历字符串两次
  */
 class Solution {
  public:
@@ -25,5 +27,31 @@ class Solution {
       maxsubstrlen = max(maxsubstrlen, right - left);
     }
     return maxsubstrlen;
+  }
+};
+
+/**
+ * 方法二：记录字符上一次出现的位置，直接跳转，避免左指针滑动，遍历字符串一次
+ * 1. abcaab
+ *       | r 指向第二个 a，l 应该跳转到 a 上一次出现的位置之后，即 l=1
+ * 2. abcaab
+ *        | r 指向第三个 a，l 应该跳转到 a 上一次出现的位置之后，即 l=4
+ * 3. abcaab
+ *         | r 指向第二个 b，b 上一次出现的位置 1 处，此时 l 已经为 4 了，
+ *           已经跳过了 b 上一次出现的位置，所以 l 不用动
+ */
+class Solution {
+ public:
+  int lengthOfLongestSubstring(string s) {
+    int l = 0, r = 0;
+    vector<int> position(128, -1); // 初始化为 -1，处理最长不重复字符串在开头的情况
+    int res = 0;
+    while (r < s.size()) {
+      l = max(l, position[s[r]] + 1); // 跳转到上一次出现的位置之后或保持不动
+      position[s[r]] = r; // 更新上一次出现的位置
+      r++;
+      res = max(res, r - l);
+    }
+    return res;
   }
 };

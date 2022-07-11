@@ -19,12 +19,12 @@ class Solution {
         int tmp = nums[i] + nums[l] + nums[r];
         if (tmp == 0) { // 找到一个符合条件的组合
           res.push_back({nums[i], nums[l], nums[r]});
-          // 跳过重复的 l 和 r
-          while (l < r && nums[l + 1] == nums[l]) l++;
-          while (l < r && nums[r - 1] == nums[r]) r--;
           // 找到答案时，双指针同时收缩
           l++;
           r--;
+          // 跳过重复的 l 和 r
+          while(l < r && nums[l] == nums[l-1]) l++;
+          while(l < r && nums[r] == nums[r+1]) r--;
         } else if (tmp > 0) {
           r--;
         } else {

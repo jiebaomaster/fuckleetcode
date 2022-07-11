@@ -24,14 +24,16 @@ class Solution {
   // 选择第一个数作为中轴，将比中轴值小的放在左边，比中轴值大的放在右边
   // 实际选出了数组中第 k 个数，并将其放入最终位置
   int partition(vector<int>& nums, int l, int r) {
-    int p = nums[l];
+    int t = l + rand() % (r - l + 1); // 随机中轴，优化时间
+    swap(nums[t], nums[l]);
+    int poivt = nums[l];
     while (l < r) {
-      while (l < r && nums[r] >= p) r--;
+      while (l < r && nums[r] >= poivt) r--;
       nums[l] = nums[r];
-      while (l < r && nums[l] <= p) l++;
+      while (l < r && nums[l] <= poivt) l++;
       nums[r] = nums[l];
     }
-    nums[l] = p;
+    nums[l] = poivt;
     return l;
   }
 };

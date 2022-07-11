@@ -47,6 +47,10 @@ class Solution {
 /**
  * https://leetcode-cn.com/problems/search-in-rotated-sorted-array/solution/shua-chuan-lc-yan-ge-ologn100yi-qi-kan-q-xifo/
  * 方法二：两次二分，先查找旋转点，再查找目标
+ * 如果数组经过两次旋转，解法还是一样的，因为无论旋转几次都只有两段有序
+ * 如 源数组   123 4567 
+ *    旋转一次 45 67|123
+ *    旋转两次 67|12345
  */
 class Solution {
  public:
@@ -70,7 +74,6 @@ class Solution {
       r = r;
     }
     // 3. 在目标段中二分查找第一个大于等于 target 的数
-    int rr = r;
     while (l < r) {
       int mid = l + (r - l) / 2;
       if (target > nums[mid])
@@ -79,6 +82,6 @@ class Solution {
         r = mid;
     }
     // 4. 返回 target 的下标
-    return (l == rr || nums[l] != target) ? -1 : l;
+    return l < nums.size() && nums[l] == target ? l : -1;
   }
 };
