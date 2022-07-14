@@ -98,7 +98,7 @@ class Solution2 {
     }
   }
   // 大顶堆 向下调整，将 nums[s] 放到正确的位置
-  // s 的孩子为 左(s+1)*2-1，右(s+1)*2
+  // s 的孩子为 左 2s+1，右 2s+2
   void adjustDown(vector<int>& nums, int s, int e) {
     while ((s + 1) * 2 - 1 <= e) { // 只调整非叶子结点
       int child = (s + 1) * 2 - 1; // s 的左孩子

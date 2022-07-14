@@ -23,3 +23,68 @@ class Solution {
     return s.substr(maxPair.first, maxPair.second - maxPair.first + 1);
   }
 };
+
+/**
+ * 区间 DP 的状态压缩
+ * 注意遍历方向，ij还是定义了区间的左右边界，但是dp改变只有一维了
+ * dp 更新时不能缺省，必须明确设置
+ */
+class Solution {
+ public:
+  string longestPalindrome(string s) {
+    pair<int, int> res;
+    int n = s.size();
+    vector<bool> dp(n, false);
+
+    for (int i = n - 1; i >= 0; i--) {
+      for (int j = n - 1; j >= i; j--) {
+        if (i == j)
+          dp[j] = true;
+        else if (i + 1 == j) {
+          dp[j] = s[i] == s[j];
+        } else {
+          dp[j] = s[i] == s[j] && dp[j - 1];
+        }
+        if (dp[j] && j - i > res.second - res.first) {
+          res = {i, j};
+        }
+      }
+    }
+
+    return s.substr(res.first, res.second - res.first + 1);
+  }
+};
+
+/**
+ * 方法二：中心扩散法
+ * 回文串具有轴对称性，只要取一个中心，然后尝试向两边扩散
+ * 取中心点时，可以是一个元素也可以是两个元素
+ */
+class Solution {
+ public:
+  string longestPalindrome(string s) {
+    pair<int, int> res;
+    for (int i = 0; i < s.size(); i++) {
+      auto p = expand(s, i, i);
+      if (res.second - res.first < p.second - p.first) {
+        res = p;
+      }
+      if (i > 0 && s[i - 1] == s[i]) {
+        auto p2 = expand(s, i - 1, i);
+        if (res.second - res.first < p2.second - p2.first) {
+          res = p2;
+        }
+      }
+    }
+    return s.substr(res.first, res.second - res.first + 1);
+  }
+
+  pair<int, int> expand(string& s, int l, int r) {
+    while (l >= 0 && r < s.size()) {
+      if (s[l] != s[r]) break;
+      l--;
+      r++;
+    }
+    return {l + 1, r - 1};
+  }
+};

@@ -21,6 +21,8 @@ class Solution {
     }
     return count;
   }
+  int mx[4] = {0, 1, 0, -1};
+  int my[4] = {1, 0, -1, 0};
   // 从 [i,j] 开始扩散，标记所有已访问的点
   void dfs(vector<vector<char>> &grid, int i, int j,
            vector<vector<bool>> &visited) {
@@ -32,9 +34,7 @@ class Solution {
 
     visited[i][j] = true; // 标记已访问的点
     // 向上下左右四个方向扩散
-    dfs(grid, i - 1, j, visited);
-    dfs(grid, i + 1, j, visited);
-    dfs(grid, i, j - 1, visited);
-    dfs(grid, i, j + 1, visited);
+    for(int k = 0; k < 4; k++)
+      dfs(grid, i+mx[k], j + my[k], visited);
   }
 };

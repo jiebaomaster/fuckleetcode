@@ -22,3 +22,22 @@ class Solution {
     return {};
   }
 };
+
+/**
+ * 方法二：一边哈希一边判断，遍历一次
+ */
+class Solution {
+ public:
+  vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> position;
+    for (int i = 0; i < nums.size(); i++) {
+      int t = target - nums[i];
+      if (position.count(t)) {
+        return {position[t], i};
+      }
+      // 先进行判断，再添加，就不会使用重复的元素了
+      position[nums[i]] = i;
+    }
+    return {0, 0};
+  }
+};

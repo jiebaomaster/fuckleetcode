@@ -33,6 +33,41 @@ class Solution {
 };
 
 /**
+ * 方法二：栈
+ * 找中点，后半链表进栈，和栈中节点拼接
+ */
+class Solution {
+ public:
+  void reorderList(ListNode* head) {
+    stack<ListNode*> st;
+    auto s = head;
+    auto f = head;
+    // 找中点
+    while (f && f->next) {
+      f = f->next->next;
+      s = s->next;
+    }
+    auto next = s->next;
+    s->next = nullptr;
+    s = next;
+    // 后半队列进栈
+    while (s) {
+      st.push(s);
+      s = s->next;
+    }
+
+    auto p = head;
+    while (!st.empty()) {
+      auto next = p->next;
+      auto n = st.top();
+      st.pop();
+      n->next = p->next;
+      p->next = n;
+      p = next;
+    }
+  }
+};
+/**
  * 方法二：链表操作组合，找中点、反转、合并
  * 1. 快慢指针找链表中点
  * 2. 反转后半部分链表
