@@ -24,3 +24,23 @@ class Solution {
     return fakeHead.next;
   }
 };
+
+/**
+ * 方法二：递归
+ */
+class Solution {
+ public:
+  ListNode* deleteDuplicates(ListNode* head) {
+    if (!head || !head->next) return head;
+    if (head->val == head->next->val) {
+      while (head->next && head->val == head->next->val) {
+        head = head->next;
+      }
+      head = head->next;
+      return deleteDuplicates(head);
+    } else {
+      head->next = deleteDuplicates(head->next);
+      return head;
+    }
+  }
+};

@@ -51,3 +51,32 @@ class Solution {
     return intervals.size() - res;
   }
 };
+
+/**
+ * 上述方法维护了区间的左端点，但是因为排序的缘故左端点是一定满足覆盖要求的，
+ * 所以只需要保证右端点能覆盖就可以了
+ */
+class Solution {
+ public:
+  int removeCoveredIntervals(vector<vector<int>>& intervals) {
+    sort(intervals.begin(), intervals.end(),
+         [](vector<int>& lhs, vector<int>& rhs) {
+           if (lhs[0] != rhs[0])
+             return lhs[0] < rhs[0];
+           else
+             return lhs[1] > rhs[1];
+         });
+
+    int r = 0;
+    int cnt = 0;
+    for (auto& v : intervals) {
+      if (r >= v[1])
+        cnt++;
+      else {
+        r = v[1];
+      }
+    }
+
+    return intervals.size() - cnt;
+  }
+};

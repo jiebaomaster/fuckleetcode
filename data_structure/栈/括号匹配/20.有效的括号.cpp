@@ -1,42 +1,31 @@
 /**
  * https://leetcode-cn.com/problems/valid-parentheses/
  * 消消乐，右括号 ")]}" 入栈的时候判断栈顶是否匹配
+ * 如果本题中不要求“左括号必须以正确的顺序闭合”，可以不使用栈，直接用变量记录三个括号的数量
  */
 class Solution {
  public:
   bool isValid(string s) {
     stack<char> st;
-    for (int i = 0; i < s.size(); i++) {
-      if (st.empty()) { // 空栈没有栈顶元素，直接入栈
-        st.push(s[i]);
-        continue;
-      }
-      switch (s[i]) {
-        case ']':
-          if (st.top() == '[') {
-            st.pop();
-            break;
-          } else {
-            return false;
-          }
+    for (auto c : s) {
+      switch (c) {
+        case '(':
+        case '[':
+        case '{':
+          st.push(c);
           break;
         case ')':
-          if (st.top() == '(') {
-            st.pop();
-            break;
-          } else {
-            return false;
-          }
+          if (st.empty() || st.top() != '(') return false;
+          st.pop();
+          break;
+        case ']':
+          if (st.empty() || st.top() != '[') return false;
+          st.pop();
           break;
         case '}':
-          if (st.top() == '{') {
-            st.pop();
-            break;
-          } else {
-            return false;
-          }
-        default:
-          st.push(s[i]);
+          if (st.empty() || st.top() != '{') return false;
+          st.pop();
+          break;
       }
     }
     return st.empty();

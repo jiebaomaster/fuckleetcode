@@ -1,10 +1,11 @@
 class Solution {
  public:
   int myAtoi(string s) {
-    enum states { pre, num };
+    enum states { pre, num, end };
     states state = pre;
     int isNagitive = false;
     int cur = 0;
+    bool got = false;
     for (int i = 0; i < s.size(); i++) {
       char c = s[i];
       switch (state) {
@@ -18,7 +19,7 @@ class Solution {
             state = num;
             cur = cur * 10 + c - '0';
           } else { // 其余字符，直接返回
-            return 0;
+            state = end;
           }
           break;
         case num: // 处理数字
@@ -29,10 +30,13 @@ class Solution {
             }
             cur = cur * 10 + (c - '0');
           } else { // 其余字符，直接返回
-            return isNagitive ? -1 * cur : cur;
+            state = end;
           }
           break;
+        default: // end
+          got = true;
       }
+      if(got) break;
     }
     // 最后一个字符是数字的，从这里返回
     return isNagitive ? -1 * cur : cur;
