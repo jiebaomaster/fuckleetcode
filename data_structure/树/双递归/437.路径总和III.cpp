@@ -38,7 +38,7 @@ class Solution {
 class Solution {
  public:
   int res = 0;
-  unordered_map<int, int> prefix; // 记录一条根节点到叶子节点的路径上所有节点的前缀和
+  unordered_map<long, int> prefix; // 记录一条根节点到叶子节点的路径上所有节点的前缀和
   int pathSum(TreeNode* root, int targetSum) {
     if (!root) return 0;
     prefix[0] = 1;

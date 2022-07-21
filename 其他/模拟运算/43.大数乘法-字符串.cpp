@@ -61,30 +61,34 @@ class Solution {
     }
     if (num1[0] == '0' || num2[0] == '0') return "0";
     // 计算两个正数的乘法
-    auto res = doMultiply(num1, num2);
-    return isNagitive ? "-" + res : res;
-  }
-  string doMultiply(string& num1, string& num2) {
-    // n1 * n2
-    if (num1.size() < num2.size()) swap(num1, num2);
-    int n = num1.size();
-    int m = num2.size();
-
-    string cur;
-    for (int i = m - 1; i >= 0; i--) {
-      string tmp(m - 1 - i, '0');
-      int n2 = num2[i] - '0';
-      int c = 0;
-      int j = n - 1;
-      while (j >= 0 || c) {
-        int t = c;
-        if (j >= 0) t += n2 * (num1[j--] - '0');
-        c = t / 10;
-        tmp = to_string(t % 10) + tmp;
-      }
-      cur = add(cur, tmp);
+    string res;
+    if (num1 < num2) {
+      res = doMultiply(num2, num1);
+    } else {
+      res = doMultiply(num1, num2);
     }
-    return cur;
+    return (isNagitive ? "-" : "") + res;
+  }
+  // lhs > rhs, lhs * rhs
+  string doMultiply(string& lhs, string& rhs) {
+    int n = lhs.size();
+    int m = rhs.size();
+    string res;
+
+    for (int i = 0; i < m; i++) {
+      int t = rhs[m - i - 1] - '0';
+      string cur(i, '0');
+      int c = 0;
+      for (int j = n - 1; j >= 0 || c; j--) {
+        if (j >= 0) c += t * (lhs[j] - '0');
+
+        cur.push_back((c % 10) + '0');
+        c /= 10;
+      }
+      reverse(cur.begin(), cur.end());
+      res = add(res, cur);
+    }
+    return res;
   }
 
   string add(string& num1, string& num2) {
@@ -93,12 +97,11 @@ class Solution {
     int j = num2.size() - 1;
     string res;
     while (i >= 0 || j >= 0 || c) {
-      int t = c;
-      if (i >= 0) t += num1[i--] - '0';
-      if (j >= 0) t += num2[j--] - '0';
+      if (i >= 0) c += num1[i--] - '0';
+      if (j >= 0) c += num2[j--] - '0';
 
-      c = t / 10;
-      res += to_string(t % 10);
+      res.push_back(c % 10 + '0');
+      c /= 10;
     }
     reverse(res.begin(), res.end());
     return res;

@@ -24,3 +24,10 @@ class Solution {
     return 1 + t % 10;
   }
 };
+
+/**
+ * 扩展：rand3 构造 rand18
+ * 先由 (rand3()-1)*3+rand3() 构造 rand9
+ * 再由 (rand3()-1)*9+rand9() 构造 rand27
+ * 最后由 rand27 拒绝采样得 rand18
+ */

@@ -65,3 +65,63 @@ class Solution {
     return true;
   }
 };
+
+/**
+ * 方法二：基于 track 位置的回溯法
+ */
+class Solution {
+ public:
+  vector<string> res;
+  vector<string> restoreIpAddresses(string s) {
+    vector<int> track;
+    dfs(track, s, 0);
+    return res;
+  }
+  // 遍历所有的分割组合
+  void dfs(vector<int> &track, string &s, int index) {
+    if (track.size() == 3) { // 分割点最多有三个
+      auto r = vaild(s, track);
+      if (!r.empty()) res.push_back(r);
+      return;
+    }
+
+    for (int i = index; i < s.size() - 1; i++) {
+      track.push_back(i);
+      dfs(track, s, i + 1);
+      track.pop_back();
+    }
+  }
+
+  // 判断分割的 IP 地址是否有效
+  string vaild(string &s, vector<int> &track) {
+    track.push_back(s.size() - 1); // 压入 n-1 处理最后一段
+    string cur;
+    int l = 0;
+    for (int i = 0; i < 4; i++) {
+      int r = track[i] + 1;
+      if (!vaildNum(s, l, r - 1)) {
+        track.pop_back();
+        return "";
+      }
+      cur += s.substr(l, r - l) + ".";
+      l = r;
+    }
+    cur.pop_back();    // .
+    track.pop_back();  // n-1
+
+    return cur;
+  }
+
+  // 判断分割出的数字是否有效
+  bool vaildNum(string &s, int l, int r) {
+    if (r - l + 1 > 3) return false;
+    if (r > l && s[l] == '0') return false;
+    int cur = 0;
+    while (l <= r) {
+      cur = cur * 10 + s[l] - '0';
+      l++;
+    }
+    if (cur > 255) return false;
+    return true;
+  }
+};
