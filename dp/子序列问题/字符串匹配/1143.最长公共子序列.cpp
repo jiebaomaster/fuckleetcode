@@ -12,7 +12,6 @@ class Solution {
   int longestCommonSubsequence(string text1, string text2) {
     // dp 的第一行和第一列是初始状态，dp[i][j] 表示 s1[i-1] s2[j-1]
     vector<vector<int>> dp(text1.size() +1, vector<int>(text2.size() + 1));
-    int res = 0;
     // [1,size] 遍历整个字符串
     for (int i = 1; i <= text1.size(); i++) {
       for (int j = 1; j <= text2.size(); j++) {

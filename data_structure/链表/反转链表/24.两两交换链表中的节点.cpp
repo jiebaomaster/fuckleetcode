@@ -26,3 +26,18 @@ class Solution {
     return hair.next;
   }
 };
+
+/**
+ * 递归法
+ */
+class Solution {
+ public:
+  ListNode* swapPairs(ListNode* head) {
+    if (!head || !head->next) return head;
+
+    auto next = head->next;
+    head->next = swapPairs(next->next);
+    next->next = head;
+    return next;
+  }
+};

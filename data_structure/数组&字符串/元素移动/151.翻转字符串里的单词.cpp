@@ -60,3 +60,41 @@ class Solution {
     }
   }
 };
+
+class Solution {
+ public:
+  string reverseWords(string s) {
+    int n = s.size();
+    int l = 0;
+    int r = 0;
+    // 1. 去除前导空格
+    while (r < n && s[r] == ' ') r++;
+    while (r < n) {
+      if (s[r] != ' ') {  // alpha
+        // 遇到字符，前移字符串，并处理一次字符串反转
+        int pl = l;
+        while (r < n && s[r] != ' ') {
+          s[l++] = s[r++];
+        }
+        reverse(s, pl, l - 1);
+      } else {  // space
+        // 遇到空格，留下一个空格，跳过剩余空格
+        s[l++] = ' ';
+        while (r < n && s[r] == ' ') r++;
+      }
+    }
+    // 删去字符串最后多余的空格
+    if (s[l - 1] == ' ') l--;
+    // 反转整个字符串
+    reverse(s, 0, l - 1);
+    // 删去多余字符
+    s.resize(l);
+    return s;
+  }
+
+  void reverse(string &s, int l, int r) {
+    while (l < r) {
+      swap(s[l++], s[r--]);
+    }
+  }
+};

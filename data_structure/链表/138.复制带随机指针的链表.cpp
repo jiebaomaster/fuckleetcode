@@ -56,3 +56,21 @@ class Solution1 {
     return target;
   }
 };
+
+/**
+ * 方法三：hash 递归
+ */
+class Solution {
+  unordered_map<Node*, Node*> m;
+
+ public:
+  Node* copyRandomList(Node* head) {
+    if (!head) return nullptr;
+
+    auto n = new Node(head->val);
+    m[head] = n;
+    n->next = copyRandomList(head->next);
+    if (m.count(head->random)) n->random = m[head->random];
+    return n;
+  }
+};
