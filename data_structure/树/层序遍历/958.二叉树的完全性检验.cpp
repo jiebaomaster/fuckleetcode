@@ -47,7 +47,7 @@ class Solution1 {
     while (!q.empty()) {
       auto n = q.front();
       q.pop();
-      if (!n) break; // 碰到null之后停止便利
+      if (!n) break; // 碰到 null 之后停止遍历
       q.push(n->left); // null 也入队
       q.push(n->right);
     }

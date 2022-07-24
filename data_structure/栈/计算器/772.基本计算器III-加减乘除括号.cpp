@@ -6,11 +6,14 @@
 class Solution {
  public:
   unordered_map<int, int> ops_rank = { // 运算符号的优先级
+      {'#', 0}, // 
       {'+', 1},
       {'-', 1},
       {'*', 2},
       {'/', 2},
   };
+  // 在 s 的最后压入特殊运算符 #，使得 ops 中所有符号都计算完
+  s.push_back('#');
   stack<int> ops; // 符号栈
   stack<int> nums; // 运算数栈
   int calculate(string s) {
@@ -21,7 +24,7 @@ class Solution {
         continue;
       else if (isdigit(c)) { // 数字，拼接值，入操作数栈
         int num = c - '0';
-        while (i + 1 < s.size() && isdigit(s[i + 1]))
+        while (isdigit(s[i + 1]))
           num = num * 10 + (s[++i] - '0');
         nums.push(num);
       } else if (c == '(') {
@@ -38,8 +41,6 @@ class Solution {
         ops.push(c);
       }
     }
-    // 完成剩余计算
-    while (!ops.empty()) eval();
     return nums.top();
   }
 
