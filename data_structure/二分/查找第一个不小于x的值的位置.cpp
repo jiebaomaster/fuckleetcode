@@ -8,10 +8,22 @@
 int lower_bound(vector<int> &nums, int l, int r, int x) {
   while(l < r) {
     int mid = l + (r-l)/2; // 防止溢出
-    if(nums[mid] < x) l = mid + 1;
-    else r = mid;
+    if(nums[mid] >= x) r = mid;
+    else l = mid + 1;
   }
   return l; // 最终 l 和 r 相等，返回谁都可以
+}
+
+/**
+ * @brief 求非降序范围 [l, r) 内第一个大于 x 的值的位置
+ */
+int upper_bound(vector<int>& nums, int l, int r, int x) {
+  while (l < r) {
+    int mid = (l + r) >> 1;
+    if (nums[mid] > x) r = mid;
+    else l = mid + 1;
+  }
+  return l;
 }
 
 /**

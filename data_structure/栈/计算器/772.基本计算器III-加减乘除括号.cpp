@@ -2,6 +2,9 @@
  * https://leetcode-cn.com/problems/basic-calculator-iii/
  * https://leetcode-cn.com/problems/basic-calculator/solution/shuang-zhan-jie-jue-tong-yong-biao-da-sh-olym/
  * 计算器的通用解决方案，双栈法
+ * 注意点：
+ * 1. 在 s 的最后压入特殊运算符 #，使得 ops 中所有符号都计算完
+ * 2. 压入运算符之前根据需要添加 0，处理单目运算符，如 -(1+2) => 0-(1+2)
  */
 class Solution {
  public:
@@ -35,6 +38,10 @@ class Solution {
         // 左括号出栈
         ops.pop();
       } else {  // 运算符
+        // 压入运算符之前根据需要添加 0，处理单目运算符
+        if (i == 0 || ops_rank.count(s[i - 1]) || s[i - 1] == '(') {
+          nums.push(0);
+        }
         // 如果当前操作符的优先级 与 栈顶操作符相比 更低或相等
         // 进行一次计算，保证优先级高的操作符先计算，相同优先级的从左向右计算
         while (!ops.empty() && ops_rank[ops.top()] >= ops_rank[c]) eval();

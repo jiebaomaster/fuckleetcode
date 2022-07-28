@@ -6,19 +6,15 @@
 class Solution {
  public:
   string longestCommonPrefix(vector<string>& strs) {
-    int cnt = 0;
     int i = 0;
     while (1) {  // 遍历字符串的每个下标
-      char t = 0;
       for (int j = 0; j < strs.size(); j++) {  // 遍历每个字符串
         if (strs[j].size() <= i) {  // 达到某个字符串下标的最大值
-          return strs[j].substr(0, i);
+          return strs[j];
         }
-        if (j == 0) {  // 记录第一个字符串的第 i 个下标的值
-          t = strs[0][i];
-          continue;
-        } else if (strs[j - 1][i] != strs[j][i]) {  // 找到某个下标不相同
-          return strs[j].substr(0, i);
+        // 如果当前字符串的第i位与前一个字符串的第i位不同，则找到最大前缀
+        if(i > 0 && strs[j-1][i] != strs[j][i]) {
+          return strs[i].substr(0, i);
         }
       }
       i++;  // 本下标的所有字符相同，判断下一个

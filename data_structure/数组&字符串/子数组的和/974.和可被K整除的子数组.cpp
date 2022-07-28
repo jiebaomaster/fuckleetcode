@@ -20,7 +20,7 @@ class Solution {
       cur += nums[i];
 
       int mod = cur % k;
-      if (mod < 0) mod += k;
+      if (mod < 0) mod += k; // 负数转正数
       if (diff_times.count(mod)) {
         res += diff_times[mod];
       }

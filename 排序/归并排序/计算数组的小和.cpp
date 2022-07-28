@@ -1,7 +1,8 @@
 /**
  * https://www.nowcoder.com/questionTerminal/edfe05a1d45c4ea89101d936cac32469?commentTags=Java
  * https://mp.weixin.qq.com/s/rMsbcUf9ZPhvfRoyZGW6HA
- * 在一个数组中，每一个数左边比当前数小的数累加起来，叫做这个数组的小和。求一个数组的小和。
+ * 在一个数组中，将每一个数左边所有小于等于当前数的数累加起来，叫做这个数组的小和。
+ * 求一个数组的小和。
  * 
  * 从小到大归并排序
  * 当左半边的 xl 被选中时，右半边剩余的所有元素都大于等于 xl，
