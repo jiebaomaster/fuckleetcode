@@ -32,7 +32,6 @@ class Solution {
         }
         // 将挑选出来的数做计算，计算结果也作为下一次拼凑的备选数字
         double t;
-        bool needBackTrack = true;
         for (int k = 0; k < 6; k++) {
           // 尝试每一种计算方法，括号的作用隐藏在加减和乘除的先后中
           switch (k) {
@@ -49,22 +48,15 @@ class Solution {
               t = nums[i] * nums[j];
               break;
             case 4:  // a/b
-              if (nums[j])
-                t = nums[i] / nums[j];
-              else
-                needBackTrack = false;
+              t = nums[i] / nums[j];
               break;
             case 5:  // b/a
-              if (nums[i])
-                t = nums[j] / nums[i];
-              else
-                needBackTrack = false;
+              t = nums[j] / nums[i];
               break;
           }
           newNums.push_back(t);
-          if (needBackTrack && backTrack(newNums)) return true;
+          if (backTrack(newNums)) return true;
           newNums.pop_back();
-          needBackTrack = true;
         }
       }
     }

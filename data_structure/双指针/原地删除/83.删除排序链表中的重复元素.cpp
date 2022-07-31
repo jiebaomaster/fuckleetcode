@@ -42,3 +42,18 @@ class Solution1 {
     return head;
   }
 };
+
+/**
+ * 递归
+ */
+class Solution {
+ public:
+  ListNode* deleteDuplicates(ListNode* head) {
+    if (!head) return nullptr;
+    while (head->next && head->val == head->next->val) {
+      head = head->next;
+    }
+    head->next = deleteDuplicates(head->next);
+    return head;
+  }
+};

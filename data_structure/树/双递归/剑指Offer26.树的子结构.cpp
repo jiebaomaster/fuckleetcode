@@ -30,8 +30,19 @@ class Solution {
   bool isSubStructure(TreeNode* A, TreeNode* B) {
     if (!B || !A) return false;
 
-    return isSame(A, B) || isSubStructure(A->left, B) ||
-           isSubStructure(A->right, B);
+    stack<TreeNode*> s;
+    auto p = A;
+    while (!s.empty() || p) {
+      while (p) {
+        s.push(p);
+        p = p->left;
+      }
+      p = s.top();
+      s.pop();
+      if (bfs(p, B)) return true;
+      p = p->right;
+    }
+    return false;
   }
   bool isSame(TreeNode* a, TreeNode* b) {
     queue<TreeNode*> q;

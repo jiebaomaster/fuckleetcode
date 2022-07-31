@@ -32,16 +32,21 @@ class Solution {
 class Solution1 {
  public:
   void sortColors(vector<int>& nums) {
-    int l = 0, r = nums.size() - 1;
-    for (int i = 0; i <= r; i++) {
-      while (i <= r && nums[i] == 2) {
-        swap(nums[i], nums[r]);
-        r--;
-      }
+    int n = nums.size();
+    int l = 0,  // 0
+        r = n - 1; // 2
+    for (int i = 0; i <= r;) {
       if (nums[i] == 0) {
-        swap(nums[i], nums[l]);
-        l++;
-      }
+        // 把 0 换到前面，前面的2肯定已经被换到后面了，只可能会换过来 0/1，
+        // 只有在 i==l 时会原地置换 0，前进
+        // 换过来的是 1，前进，等待后面可能和 0 交换
+        swap(nums[i], nums[l++]);
+        i++;
+      } else if (nums[i] == 2) { 
+        // 把 2 换到后面之后，可能会换过来一个 0/1/2，需要继续处理，所以 i 不前进
+        swap(nums[i], nums[r--]);
+      } else
+        i++;
     }
   }
 };

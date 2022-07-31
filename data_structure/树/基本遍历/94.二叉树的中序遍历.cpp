@@ -18,10 +18,8 @@ class Solution {
       st.pop();
       ret.push_back(cur->val);
 
-      if (cur->right) // 如果有右子树，就走右子树
-        cur = cur->right;
-      else // 否则从栈中弹出一个
-        cur = nullptr;
+      // 如果有右子树，就走右子树，否则设为 null 从栈中弹出一个
+      cur = cur->right;
     }
 
     return ret;

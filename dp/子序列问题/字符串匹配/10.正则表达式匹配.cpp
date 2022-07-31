@@ -9,8 +9,8 @@
  *    3.1 如果 p[j-1] != s[i] : dp[i][j] = dp[i][j-2] // a* only counts as empty
  *    3.2 如果 p[j-1] == s[i] or p[j-1] == '.'：
  *        dp[i][j] = dp[i-1][j] // a* counts as multiple a
- *        or dp[i][j] = dp[i][j-1] // a* counts as single a
- *        or dp[i][j] = dp[i][j-2] // a* counts as empty
+ *        or dp[i][j] = dp[i-1][j-2] // a* counts as single a
+ *        or dp[i][j] = dp[i][j-2] // a* counts as empty，即前面就已经匹配了，p后面的可以不起作用
  *
  * base case:
  * 1. p为空串，s不为空串，肯定不匹配。 dp[i][0] = false
@@ -18,6 +18,13 @@
  *    把 p 变为空串。 dp[0][j] = dp[0][j - 2];
  *    如：p=a*a* 匹配 空串
  * 3. s、p都为空串，肯定匹配。dp[0][0] = true
+ * 
+ * 本题还可以有变形，如新的通配符 '+'，
+ * '+' 相当于只能匹配一个或多个，不能匹配 0 个
+ * 如果 p[j] == '*'：
+ *    如果 p[j-1] == s[i] or p[j-1] == '.'：
+ *        dp[i][j] = dp[i-1][j] // a* counts as multiple a
+ *        or dp[i][j] = dp[i-1][j-2] // a* counts as single a
  */
 class Solution {
  public:
@@ -37,7 +44,7 @@ class Solution {
         } else if (p[j - 1] == '*') {
           if (s[i - 1] == p[j - 1 - 1] || p[j - 1 - 1] == '.')
             dp[i][j] = dp[i][j - 2]      // match 0
-                       || dp[i][j - 1]   // match one
+                       || dp[i - 1][j - 2]   // match one
                        || dp[i - 1][j];  // match n
           else
             dp[i][j] = dp[i][j - 2];  // match 0

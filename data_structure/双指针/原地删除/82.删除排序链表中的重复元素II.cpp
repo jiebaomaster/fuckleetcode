@@ -36,8 +36,7 @@ class Solution {
       while (head->next && head->val == head->next->val) {
         head = head->next;
       }
-      head = head->next;
-      return deleteDuplicates(head);
+      return deleteDuplicates(head->next);
     } else {
       head->next = deleteDuplicates(head->next);
       return head;
