@@ -20,7 +20,7 @@ class Solution {
 };
 
 /**
- * 方法二：排序+双指针判断
+ * 方法二：排序+双指针判断，类似归并
  * 时间复杂度 排序 O(nlogn + mlogm)
  * 空间复杂度 O(1)
  */
@@ -50,6 +50,33 @@ class Solution {
         while (j < m - 1 && nums2[j] == nums2[j - 1]) j++;
       }
     }
+    return res;
+  }
+};
+
+/**
+ * 方法三，排序+二分
+ */
+class Solution {
+ public:
+  vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+    sort(nums1.begin(), nums1.end());
+    sort(nums2.begin(), nums2.end());
+    vector<int> res;
+    int n = nums1.size();
+    int m = nums2.size();
+    auto t = nums2.begin();
+    for (int i = 0; i < n; i++) {
+      // 二分，在 nums[2] 中找到第一个大于等于 nums1[i] 的
+      t = lower_bound(t, nums2.end(), nums1[i]);
+      // 没有找到，那 nums[i] 之后的元素也肯定不重复
+      if (t == nums2.end()) break;
+      // 找到一个一样的
+      if (*t == nums1[i]) res.push_back(nums1[i]);
+      // 跳过 nums1 中的重复数
+      while (i < n - 1 && nums1[i] == nums1[i + 1]) i++;
+    }
+
     return res;
   }
 };

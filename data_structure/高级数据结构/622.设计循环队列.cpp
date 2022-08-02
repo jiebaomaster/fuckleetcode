@@ -96,3 +96,48 @@ class MyCircularQueue {
 
   bool isFull() { return size == capacity; }
 };
+
+/**
+ * https://leetcode.cn/problems/design-circular-queue/solution/she-ji-xun-huan-dui-lie-by-leetcode-solu-1w0a/
+ * 方法三：k+1长度数组，哨兵
+ * 尾元素的下一个元素作为哨兵，不存储元素，用来区分空和满
+ * 当循环队列中只有一个哨兵元素时，队列为空，此时 head==tail
+ * 当循环队列中只剩下一个空存储单元时，队列已满，此时 (tail + 1) % capacity == head
+ */
+class MyCircularQueue {
+  int capacity;
+  vector<int> cache;
+  int tail; // 哨兵位置，即尾元素的下一个位置，用来区分
+  int head; // 第一个元素的位置
+
+ public:
+  MyCircularQueue(int k) {
+    head = tail = 0;
+    capacity = k + 1;
+    cache.resize(k + 1);
+  }
+
+  bool enQueue(int value) {
+    if (isFull()) return false;
+    cache[tail++] = value;
+    tail %= capacity;
+    return true;
+  }
+
+  bool deQueue() {
+    if (isEmpty()) return false;
+    head++;
+    head %= capacity;
+    return true;
+  }
+
+  int Front() { return isEmpty() ? -1 : cache[head]; }
+
+  int Rear() {
+    return isEmpty() ? -1 : cache[(tail - 1 + capacity) % capacity];
+  }
+
+  bool isEmpty() { return head == tail; }
+
+  bool isFull() { return (tail + 1) % capacity == head; }
+};

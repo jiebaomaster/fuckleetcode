@@ -36,7 +36,7 @@ class Solution1 {
     long xx = x;
     long rx = 0;
     while (x) {
-      // x 的地位是 rx 的高位
+      // x 的低位是 rx 的高位
       rx = rx * 10 + x % 10;
       x /= 10;
     }

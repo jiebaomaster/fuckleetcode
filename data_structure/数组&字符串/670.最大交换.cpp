@@ -35,3 +35,41 @@ class Solution {
     return res;
   }
 };
+
+/**
+ * 可得的最大的数是每一位从大到小排列的，从最大的数出发，看当前数和最大数的差距
+ * 对比排序前后字符串，找出第一个不一样的，这两个就是要交换的数，
+ * 然后从排序前的那个开始往后面找出与排序后的数一样的，
+ *   源数据 3979
+ *  排序 => 9973
+ *  第一个不同为第一位，则第一位应该是 9，在源数据中从后往前找第一个 9，并与第一位交换
+ *  交换 => 9973
+ */
+class Solution {
+ public:
+  int maximumSwap(int num) {
+    vector<int> str;
+    int num_pre = num;
+    while (num) {
+      str.push_back(num % 10);
+      num /= 10;
+    }
+    vector<int> maxStr(str.begin(), str.end());
+    sort(maxStr.begin(), maxStr.end());
+    int n = str.size();
+    for (int i = n - 1; i >= 0; i--) {
+      if (str[i] != maxStr[i]) {
+        for (int j = 0; j < i; j++) {
+          if (maxStr[i] == str[j]) {
+            swap(str[j], str[i]);
+
+            int res = 0;
+            for (int k = n - 1; k >= 0; k--) res = res * 10 + str[k];
+            return res;
+          }
+        }
+      }
+    }
+    return num_pre;
+  }
+};

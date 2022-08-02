@@ -101,3 +101,62 @@ class Solution {
     return tmp;
   }
 };
+
+class Solution {
+ public:
+  string validIPAddress(string queryIP) {
+    if (isIPv4(queryIP))
+      return "IPv4";
+    else if (isIPv6(queryIP))
+      return "IPv6";
+    return "Neither";
+  }
+
+  bool isIPv4(string &ip) {
+    int dotCnt = 0;
+    int l = 0;
+    if (ip.back() == '.') return false;
+    for (int i = 0; i < ip.size(); i++) {
+      if (ip[i] == '.' || i == ip.size() - 1) {
+        if (i == ip.size() - 1) i++;
+        dotCnt++;
+        if (ip[l] == '.' || i - l > 3) return false;
+        if (ip[l] == '0' && l + 1 < i) return false;
+        int cur = 0;
+        while (l < i) {
+          if (!isdigit(ip[l])) return false;
+          cur = cur * 10 + (ip[l] - '0');
+          l++;
+        }
+
+        if (cur > 255) return false;
+
+        l = i + 1;
+      }
+    }
+    return dotCnt == 4;
+  }
+
+  bool isIPv6(string &ip) {
+    int cnt = 0;
+    int l = 0;
+    if (ip.back() == ':') return false;
+    for (int i = 0; i < ip.size(); i++) {
+      if (ip[i] == ':' || i == ip.size() - 1) {
+        if (i == ip.size() - 1) i++;
+
+        cnt++;
+        if (ip[l] == ':' || i - l > 4) return false;
+        while (l < i) {
+          if (!isdigit(ip[l]) && !((ip[l] >= 'a' && ip[l] <= 'f') ||
+                                   (ip[l] >= 'A' && ip[l] <= 'F')))
+            return false;
+          l++;
+        }
+
+        l = i + 1;
+      }
+    }
+    return cnt == 8;
+  }
+};

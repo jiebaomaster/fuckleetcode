@@ -1,5 +1,7 @@
 /**
  * https://leetcode-cn.com/problems/remove-all-adjacent-duplicates-in-string/
+ * 本题中相邻项只能两两删除，removeDuplicates("aaa")="a"，removeDuplicates("aaaa")=""
+ * 
  * 方法一：栈，判断栈顶元素和入栈元素是否相等
  */
 class Solution {

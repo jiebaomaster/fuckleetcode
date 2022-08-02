@@ -10,7 +10,7 @@
  * 
  * 数形结合的思想，折线图 y=gas[x]-cost[x]
  * 要使从 x 出发能绕行一周，则 y 的任意部分都在 X 轴以上，只要 y 的最低点在 X 轴之上即可
- * 即从 y 的最低点出发
+ * 即从 y 的最低点的下一个点出发
  */
 class Solution {
  public:
@@ -45,26 +45,18 @@ class Solution {
 class Solution {
  public:
   int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-    int n = gas.size();
-    for (int i = 0; i < n;) {
-      int x = i;
-      int cur = gas[x];
-      bool got = true;
-      int next; // y+1
-      do { // 判断从 x 出发是否能绕行一周
-        next = (x + 1) % n;
-        if (cur < cost[x]) { // 
-          got = false;
-          break;
-        }
-        cur = cur - cost[x] + gas[next];
-
-        j = next;
-      } while (x != i); // x 回到 i 时说明绕行一周成功了
-      if (got) return i;
-      if (next <= i) break; // y+1 到 x 前面去了，说明所有元素都被判断过了
-      i = next; // 下一次从 y+1 开始判断
+    int res = 0;
+    int cur = 0; // 从 res 出发的剩余量
+    int sum = 0; // 总剩余量
+    for (int i = 0; i < gas.size(); i++) {
+      sum += gas[i] - cost[i];
+      cur += gas[i] - cost[i];
+      if (cur < 0) { // 走不到下一个了，则假设从下一个节点出发
+        res = i + 1;
+        cur = 0;
+      }
     }
-    return -1;
+    // 如果存在解，则 保证 它是 唯一 的，所以可以直接返回 res
+    return sum < 0 ? -1 : res;
   }
 };
