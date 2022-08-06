@@ -16,22 +16,18 @@
  */
 class Solution {
  public:
-  // 等待不超过 day 天，且每束 k 朵的情况下，最多能分出几束
+  // 等待 day 天，且每束 k 朵的情况下，最多能分出几束
   int f(vector<int>& bloomDay, int day, int k) {
     int cnt = 0;
     int cur = 0;
-    int maxDay = 0;
     for (const auto d : bloomDay) {
-      if (maxDay < d) maxDay = d;
-      if (maxDay > day) { // 这朵花开花时间太晚了，丢弃
-        maxDay = 0;
+      if (d > day) { // 这朵花开花时间太晚了，丢弃
         cur = 0;
       } else {
         cur++; // 归入当前花束
         if (cur == k) { // 花束达到要求
           cnt++;
           cur = 0;
-          maxDay = 0;
         }
       }
     }

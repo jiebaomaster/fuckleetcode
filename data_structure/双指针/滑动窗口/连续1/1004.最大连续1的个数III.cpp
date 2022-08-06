@@ -11,14 +11,13 @@ class Solution {
 
     while (r < nums.size()) {
       if (nums[r] == 0) {
-        if (cnt0 < k) {
-          cnt0++;
-        } else {
-          while (nums[l] == 1) l++;
-          l++;
-        }
+        cnt0++;
       }
-      ret = max(ret, r - l + 1);
+      while (cnt0 > k) {
+        if (nums[l] == 0) cnt0--;
+        l++;
+      }
+      res = max(res, r - l + 1);
       r++;
     }
 

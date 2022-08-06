@@ -1,5 +1,9 @@
 /**
+ * https://leetcode.cn/problems/magnetic-force-between-two-balls/
  * 选取的球数越多，任意两球之间最小磁力越小
+ * 
+ * 如果 left=mid，则 else 语句 right=mid-1，mid = (left + right + 1) >> 1
+ * 如果 right=mid，则 else 语句 left=mid+1，mid = (left + right) >> 1
  */
 class Solution {
  public:
