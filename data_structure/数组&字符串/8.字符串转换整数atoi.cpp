@@ -1,3 +1,6 @@
+/**
+ * https://leetcode.cn/problems/string-to-integer-atoi/
+ */
 class Solution {
  public:
   int myAtoi(string s) {
@@ -40,5 +43,38 @@ class Solution {
     }
     // 最后一个字符是数字的，从这里返回
     return isNagitive ? -1 * cur : cur;
+  }
+};
+
+/**
+ * 不使用转态机的写法
+ */
+class Solution {
+ public:
+  int myAtoi(string s) {
+    int i = 0;
+    int n = s.size();
+    // 1. 跳过空格
+    while (i < n && s[i] == ' ') i++;
+    // 2. 处理正负号
+    bool isNag = false;
+    if (s[i] == '-') {
+      isNag = true;
+      i++;
+    } else if (s[i] == '+')
+      i++;
+    // 3. 处理数字部分
+    int cur = 0;
+    while (i < n) {
+      if (!isdigit(s[i])) { // 遇到非数字就退出
+        break;
+      }
+      if (cur > (INT_MAX - (s[i] - '0')) / 10) { // 越界的直接返回截断
+        return isNag ? INT_MIN : INT_MAX;
+      }
+      cur = cur * 10 + (s[i] - '0');
+      i++;
+    }
+    return isNag ? -1 * cur : cur;
   }
 };

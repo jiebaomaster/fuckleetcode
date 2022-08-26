@@ -134,35 +134,37 @@ class Solution1 {
 class Solution2 {
  public:
   ListNode* sortList(ListNode* head) {
+    if (!head || !head->next) return head;
+    return quickSort(head, nullptr);
+  }
+  ListNode* quickSort(ListNode* head, ListNode* end) {
     if (!head || head->next == nullptr) return head;
 
-    ListNode smallHead(0);
-    ListNode largeHead(0);
-
-    ListNode* small = &smallHead;
-    ListNode* large = &largeHead;
-    ListNode* p = head;  // 选择第一个结点为中轴
-    ListNode* n = head;
-    n = n->next;  // 从第二个开始
-    while (n) {
-      if (n->val < p->val) {  // 加入 small
-        small->next = n;
-        small = small->next;
-      } else {  // 加入 large
-        large->next = n;
-        large = large->next;
+    auto poivt = head; // 以第一个节点为中轴
+    ListNode smaller(-1); // 比中轴小的
+    ListNode bigger(-1);  // 比中轴大的
+    auto preS = &smaller;
+    auto preB = &bigger;
+    auto p = poivt->next; // 从中轴的下一个开始
+    while (p != end) { // 将链表分为两份
+      if (p->val < poivt->val) {
+        preS->next = p;
+        preS = p;
+        p = p->next;
+      } else {
+        preB->next = p;
+        preB = p;
+        p = p->next;
       }
-      n = n->next;
     }
-
-    // 将p加入small链表中参与排序，避免特殊处理small链表为空的情况
-    small->next = p;
-    p->next = nullptr;  // small 链表尾元素的下一个必须为 null
-    small = sortList(smallHead.next);  // start ~ p
-    large->next = nullptr;
-    large = sortList(largeHead.next);  // p+1 ~ end
-    p->next = large;                   // 连接排序后的 large 链表
-
-    return small;  // 返回列表排序完之后的头结点
+    // smaller -> poivt -> bigger -> end
+    // 排序前半段 [smaller, poivt)
+    preS->next = poivt;
+    smaller.next = doQuickSort(smaller.next, poivt);
+    // 排序后半段 [bigger, end)
+    preB->next = end;
+    poivt->next = doQuickSort(bigger.next, end);
+    // 返回的是排序后的第一个链表节点
+    return smaller.next;
   }
 };

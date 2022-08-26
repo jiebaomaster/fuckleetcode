@@ -34,6 +34,23 @@ class Solution {
 };
 
 /**
+ * s = [0...i)+[i...n)
+ * 如果以 [0...i) 重复，则 s == [i...n) + [0...i)
+ */
+class Solution {
+ public:
+  bool repeatedSubstringPattern(string s) {
+    for (int i = 1; i <= s.size() / 2; i++) {
+      string tmp = s.substr(i) + s.substr(0, i);
+      if (tmp == s) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
+
+/**
  * https://leetcode-cn.com/problems/repeated-substring-pattern/solution/jian-dan-ming-liao-guan-yu-javaliang-xing-dai-ma-s/
  */
 class Solution1 {

@@ -1,5 +1,5 @@
 /**
- * @brief 求非降序范围 [l, r) 内第一个不小于 x 的值的位置
+ * @brief 求升序序列范围 [l, r) 内第一个不小于 x 的值的位置
  * 同时适用于区间为空、答案不存在、有重复元素、搜索开/闭的上/下界等情况
  * https://www.zhihu.com/question/36132386/answer/530313852
  * 
@@ -22,6 +22,31 @@ int upper_bound(vector<int>& nums, int l, int r, int x) {
     int mid = (l + r) >> 1;
     if (nums[mid] > x) r = mid;
     else l = mid + 1;
+  }
+  return l;
+}
+
+/**
+ * @brief 求降序序列范围 [l, r) 内第一个大于等于 x 的值的位置
+ * 如果在降序序列中查找，则 mid 的技术要向上取整 l + r + 1，且 l = mid
+ */
+int lower_bound(vector<int> &nums, int l, int r, int x) {
+  while(l < r) {
+    int mid = (l + r + 1);
+    if(nums[mid] >= x) l = mid;
+    else r = mid - 1;
+  }
+  return l; // 最终 l 和 r 相等，返回谁都可以
+}
+
+/**
+ * @brief 求降序序列范围 [l, r) 内第一个大于 x 的值的位置
+ */
+int upper_bound(vector<int>& nums, int l, int r, int x) {
+  while (l < r) {
+    int mid = (l + r + 1) >> 1;
+    if (nums[mid] > x) l = mid;
+    else r = mid - 1;
   }
   return l;
 }

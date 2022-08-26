@@ -39,3 +39,44 @@ class Solution {
     return;
   }
 };
+
+/**
+ * 用二分查找的加快序列查找
+ */
+class Solution {
+ public:
+  void nextPermutation(vector<int>& nums) {
+    if (nums.size() < 2) return;
+    int l = nums.size() - 2;
+    // 1. 从数组倒着查找，直到 nums[i] 小于 nums[i+1]
+    while (l >= 0 && nums[l] >= nums[l + 1]) {
+      l--;
+    }
+    int t = l; // t 为需要交换的下标
+    // [l,r] 为需要递增重排的范围
+    l++;
+    int r = nums.size() - 1;
+    // 2. 递增排序
+    while (l < r) {
+      swap(nums[l], nums[r]);
+      l++;
+      r--;
+    }
+    // 3. 在[l,r] 中找到第一个比 n[t] 大的，交换
+    if (t >= 0) {  // t 合法，才需要交换，t 为 -1 时表示原始序列递增
+      auto i = upper_bound(nums, t + 1, nums.size() - 1, nums[t]);
+      swap(nums[t], nums[i]);
+    }
+  }
+  // 递增序列中找第一个大于 target 的数
+  int upper_bound(vector<int>& nums, int l, int r, int target) {
+    while (l < r) {
+      int mid = (l + r) >> 1;
+      if (nums[mid] <= target)
+        l = mid + 1;
+      else
+        r = mid;
+    }
+    return l;
+  }
+};

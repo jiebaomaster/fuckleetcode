@@ -12,22 +12,24 @@ class Solution {
 
     int PRIME = 131313;
     int n = haystack.size(), m = needle.size();
+    if(n < m) return -1;
+
     vector<unsigned long long> hash_haystack(n + 1);  // 前 i 个字符的哈希值
     vector<unsigned long long> hash_needle(m + 1);  // 前 i 个字符的哈希值
-    vector<unsigned long long> power(max(n, m) + 1);  // PRIME^i
-    power[0] = 1;
-    for (int i = 1; i <= max(m, n); i++) {
-      power[i] = power[i - 1] * PRIME;
-    }
-    for (int i = 1; i <= n; i++)  // 求 haystack 哈希前缀
+    unsigned long long orderPowerM = 1; // PRIME^m
+    for (int i = 1; i <= n; i++) {
+      // 求 haystack 哈希前缀
       hash_haystack[i] = hash_haystack[i - 1] * PRIME + haystack[i - 1];
-    for (int i = 1; i <= m; i++)  // 求 needle 哈希前缀
+    }
+    for (int i = 1; i <= m; i++) { // 求 needle 哈希前缀
+      orderPowerM *= PRIME;
       hash_needle[i] = hash_needle[i - 1] * PRIME + needle[i - 1];
+    }  
 
     for (int j = m; j <= n; j++) {
       int i = j - m + 1;
       // hash[i,j]
-      auto h = hash_haystack[j] - hash_haystack[i - 1] * power[j - i + 1];
+      auto h = hash_haystack[j] - hash_haystack[i - 1] * orderPowerM;
       if (h == hash_needle[m]) return i - 1;
     }
     return -1;

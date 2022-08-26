@@ -1,6 +1,5 @@
 /*
  * https://leetcode.cn/problems/convert-binary-search-tree-to-sorted-doubly-linked-list/
-
  */
 class Solution {
  public:
@@ -14,24 +13,25 @@ class Solution {
     prev->right = n;
     return n;
   }
-  // 展开为双向链表
+  // 中序遍历，展开为双向链表
   Node* doTreeToDoublyList(Node* root) {
     if (!root) return nullptr;
+    
+    // 展开左边
+    auto l = doTreeToDoublyList(root->left);
+    
+    // 处理当前
+    if (pre) {
+      pre->right = root;
+      root->left = pre;
+      pre = root;
+    } else // pre 不存在，即左下角
+      pre = root;
 
-    Node* ln = nullptr;
-    if (root->left) {
-      ln = treeToDoublyList(root->left);
-      prev->right = root;
-      root->left = prev;
-    }
-    // 中序遍历，保证 prev 始终指向前驱节点
-    prev = root;
-    if (root->right) {
-      auto rn = treeToDoublyList(root->right);
-      root->right = rn;
-      rn->left = root;
-    }
+    // 展开右边
+    doTreeToDoublyList(root->right);
+
     // 返回最左边的点
-    return ln ? ln : root;
+    return l ? l : root;
   }
 };

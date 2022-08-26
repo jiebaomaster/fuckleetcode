@@ -22,7 +22,9 @@ class Solution {
 
 /**
  * https://leetcode.cn/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/
- * 方法二：二分查找
+ * 方法二：贪心+二分查找
+ * 本质是要贪心地（每一位都最小）将递增子序列构造出来，
+ * 所以这种方法可以直接输出字典序最小的递增子序列
  * 
  * 令 tails[i] 的值代表 长度为 i+1 的递增子序列 的最后一个元素的值
  * 遍历 nums，用 nums[j] 更新 递增子序列的最后一个元素

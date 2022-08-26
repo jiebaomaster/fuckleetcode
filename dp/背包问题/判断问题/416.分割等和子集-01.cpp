@@ -34,3 +34,24 @@ class Solution {
     return dp[nums.size()][sum];
   }
 };
+
+// 状态压缩
+class Solution {
+ public:
+  bool canPartition(vector<int>& nums) {
+    int sum = accumulate(nums.begin(), nums.end(), 0);
+    if (sum % 2) return false;
+    sum /= 2;
+    int n = nums.size();
+    vector<bool> dp(sum + 1, false);
+    dp[0] = true;
+    for (int i = 1; i <= n; i++) {
+      for (int j = sum; j > 0; j--) {
+        if (!dp[j] && j >= nums[i - 1]) {
+          dp[j] = dp[j - nums[i - 1]];
+        }
+      }
+    }
+    return dp[sum];
+  }
+};
